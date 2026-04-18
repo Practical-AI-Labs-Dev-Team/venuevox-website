@@ -1361,7 +1361,8 @@ body.theme-day .section:not(.light) .eyebrow { color: var(--teal); }
 body.theme-day .section:not(.light) .eyebrow::before { background: var(--teal); }
 
 /* Compare (light section — already has dark text) */
-body.theme-day .compare-col.good p { color: #EEE9E1; }
+body.theme-day .compare-col.good p,
+body.theme-day .compare-col.good h3 { color: #EEE9E1; }
 
 /* Pillars */
 body.theme-day .pillar     { background: #fff; border-color: rgba(15,27,45,.08); }
