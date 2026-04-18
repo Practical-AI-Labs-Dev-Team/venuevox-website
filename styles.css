@@ -1213,6 +1213,7 @@ footer {
   gap: 10px;
 }
 .foot-top a:hover { color: var(--ink); }
+.footer-brand { color: var(--ink); }
 
 .foot-bottom {
   padding-top: 24px;
@@ -1317,6 +1318,8 @@ body.theme-day .hero::before {
     linear-gradient(to right, rgba(15,27,45,.05) 1px, transparent 1px),
     linear-gradient(to bottom, rgba(15,27,45,.05) 1px, transparent 1px);
 }
+body.theme-day .hero .eyebrow { color: var(--teal); }
+body.theme-day .hero .eyebrow::before { background: var(--teal); }
 body.theme-day .hero p.sub       { color: rgba(42,51,64,.78); }
 body.theme-day .hero .meta       { color: rgba(42,51,64,.6); border-color: rgba(15,27,45,.08); }
 body.theme-day .hero .meta strong { color: var(--navy); }
@@ -1353,9 +1356,9 @@ body.theme-day .section p        { color: rgba(42,51,64,.75); }
 body.theme-day .section-head p   { color: rgba(42,51,64,.75); }
 body.theme-day .section.light    { background: #fff; }
 
-/* Eyebrow in day light sections */
-body.theme-day .section:not(.light) .eyebrow { color: rgba(42,51,64,.65); }
-body.theme-day .section:not(.light) .eyebrow::before { background: rgba(42,51,64,.5); }
+/* Eyebrow in day non-light sections */
+body.theme-day .section:not(.light) .eyebrow { color: var(--teal); }
+body.theme-day .section:not(.light) .eyebrow::before { background: var(--teal); }
 
 /* Compare (light section — already has dark text) */
 body.theme-day .compare-col.good p { color: #EEE9E1; }
@@ -1378,7 +1381,7 @@ body.theme-day .pipeline-shell { background: #fff; border-color: rgba(15,27,45,.
 body.theme-day .p-step  { background: var(--stone-2); border-color: rgba(15,27,45,.08); }
 body.theme-day .p-name  { color: var(--navy); }
 body.theme-day .p-desc  { color: rgba(42,51,64,.75); }
-body.theme-day .p-arrow { color: rgba(42,51,64,.4); }
+body.theme-day .p-arrow { color: rgba(42,51,64,.55); }
 body.theme-day .process-note { color: rgba(42,51,64,.65); border-color: rgba(15,27,45,.08); }
 
 /* Multi-location */
@@ -1390,8 +1393,8 @@ body.theme-day .ms-item p  { color: rgba(42,51,64,.72); }
 body.theme-day .final-cta   { background: var(--stone-2); }
 body.theme-day .final-cta h2 { color: var(--navy); }
 body.theme-day .final-cta p  { color: rgba(42,51,64,.72); }
-body.theme-day .final-cta .eyebrow { color: rgba(42,51,64,.65); }
-body.theme-day .final-cta .eyebrow::before { background: rgba(42,51,64,.5); }
+body.theme-day .final-cta .eyebrow { color: var(--teal); }
+body.theme-day .final-cta .eyebrow::before { background: var(--teal); }
 body.theme-day .final-cta .btn-ghost {
   color: var(--navy);
   border-color: rgba(15,27,45,.15);
@@ -1400,6 +1403,7 @@ body.theme-day .final-cta .btn-ghost {
 /* Footer */
 body.theme-day footer       { background: var(--stone-2); color: rgba(42,51,64,.72); }
 body.theme-day footer h5    { color: var(--navy); }
+body.theme-day .footer-brand { color: var(--navy); }
 body.theme-day .foot-bottom { border-color: rgba(15,27,45,.08); color: rgba(42,51,64,.6); }
 body.theme-day footer a:hover { color: var(--navy); }
 

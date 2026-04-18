@@ -1,0 +1,1475 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>VenueVox — Every call sells.</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter+Tight:wght@400;500;600;700;800&family=Inter:wght@400;500;600;700&family=IBM+Plex+Sans:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+
+<template id="__bundler_thumbnail" data-bg-color="#0F1B2D">
+  <svg viewBox="0 0 1200 800" xmlns="http://www.w3.org/2000/svg">
+    <rect width="1200" height="800" fill="#0F1B2D"/>
+    <g stroke="#19B3A6" stroke-width="22" fill="none" stroke-linecap="square" stroke-linejoin="miter">
+      <path d="M420 280 L560 560 L600 440 L640 560 L780 280"/>
+    </g>
+    <circle cx="850" cy="285" r="10" fill="#19B3A6"/>
+  </svg>
+</template>
+<style>
+:root{
+  --navy:#0F1B2D;
+  --navy-2:#0B1422;
+  --graphite:#2A3340;
+  --teal:#19B3A6;
+  --teal-soft:rgba(25,179,166,.12);
+  --brass:#C79A4B;
+  --stone:#EEE9E1;
+  --stone-2:#F6F2EB;
+  --emerald:#10B981;
+  --coral:#EF4444;
+  --line:rgba(238,233,225,.10);
+  --line-2:rgba(238,233,225,.18);
+  --ink:#EEE9E1;
+  --ink-mute:rgba(238,233,225,.68);
+  --ink-dim:rgba(238,233,225,.48);
+
+  --f-display:"Inter Tight", ui-sans-serif, system-ui, sans-serif;
+  --f-sans:"Inter", ui-sans-serif, system-ui, sans-serif;
+  --f-num:"IBM Plex Sans", ui-sans-serif, system-ui, sans-serif;
+  --f-mono:"IBM Plex Mono", ui-monospace, monospace;
+}
+*{box-sizing:border-box}
+html,body{margin:0;padding:0}
+body{
+  font-family:var(--f-sans);
+  color:var(--ink);
+  background:var(--navy);
+  -webkit-font-smoothing:antialiased;
+  text-rendering:optimizeLegibility;
+  font-size:16px;
+  line-height:1.55;
+}
+h1,h2,h3,h4{font-family:var(--f-display); letter-spacing:-.02em; margin:0; font-weight:600;}
+h1{letter-spacing:-.035em; font-weight:700}
+a{color:inherit; text-decoration:none}
+button{font-family:inherit}
+.num{font-family:var(--f-num); font-variant-numeric:tabular-nums}
+.mono{font-family:var(--f-mono)}
+.container{max-width:1280px; margin:0 auto; padding:0 32px}
+.eyebrow{
+  font-family:var(--f-mono); font-size:11px; text-transform:uppercase;
+  letter-spacing:.18em; color:var(--teal);
+  display:inline-flex; align-items:center; gap:10px;
+}
+.eyebrow::before{content:""; width:18px; height:1px; background:var(--teal); display:inline-block}
+
+/* ===================== NAV ===================== */
+.nav{
+  position:sticky; top:0; z-index:40;
+  background:rgba(15,27,45,.75);
+  backdrop-filter:saturate(140%) blur(14px);
+  border-bottom:1px solid var(--line);
+}
+.nav-inner{display:flex; align-items:center; justify-content:space-between; height:68px}
+.brand{display:flex; align-items:center; gap:10px; font-family:var(--f-display); font-weight:700; letter-spacing:-.02em; font-size:18px}
+.brand .mark{
+  width:26px; height:26px; position:relative;
+  display:inline-flex; align-items:center; justify-content:center;
+}
+.brand .mark svg{display:block}
+.nav ul{list-style:none; display:flex; gap:28px; padding:0; margin:0; font-size:14px; color:var(--ink-mute)}
+.nav ul a:hover{color:var(--ink)}
+.nav-cta{display:flex; align-items:center; gap:10px}
+
+/* ===================== BUTTONS ===================== */
+.btn{
+  display:inline-flex; align-items:center; gap:10px;
+  height:44px; padding:0 18px; border-radius:8px;
+  font-size:14px; font-weight:600; letter-spacing:-.005em;
+  border:1px solid transparent; cursor:pointer;
+  transition:transform .15s ease, background .2s ease, border-color .2s ease, color .2s ease;
+}
+.btn:hover{transform:translateY(-1px)}
+.btn-primary{background:var(--teal); color:#042723;}
+.btn-primary:hover{background:#22c8ba}
+.btn-ghost{background:transparent; color:var(--ink); border-color:var(--line-2)}
+.btn-ghost:hover{border-color:var(--ink); background:rgba(238,233,225,.04)}
+.btn-dark{background:var(--navy); color:var(--ink)}
+.btn-sm{height:36px; padding:0 14px; font-size:13px}
+.btn .arrow{display:inline-block; transition:transform .2s}
+.btn:hover .arrow{transform:translateX(2px)}
+
+/* ===================== HERO ===================== */
+.hero{
+  position:relative;
+  padding:80px 0 64px;
+  overflow:hidden;
+  border-bottom:1px solid var(--line);
+  background:
+    radial-gradient(1100px 500px at 85% -10%, rgba(25,179,166,.12), transparent 60%),
+    radial-gradient(700px 400px at 10% 100%, rgba(199,154,75,.06), transparent 70%),
+    linear-gradient(180deg, var(--navy) 0%, var(--navy-2) 100%);
+}
+.hero::before{
+  /* architectural grid lines */
+  content:""; position:absolute; inset:0; pointer-events:none;
+  background-image:
+    linear-gradient(to right, rgba(238,233,225,.04) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(238,233,225,.04) 1px, transparent 1px);
+  background-size:80px 80px;
+  mask-image:linear-gradient(180deg, rgba(0,0,0,.6), rgba(0,0,0,0) 85%);
+}
+.hero-grid{
+  display:grid; grid-template-columns: 1.05fr .95fr; gap:64px; align-items:center;
+  position:relative;
+}
+.hero h1{
+  font-size:clamp(44px, 5.2vw, 76px); line-height:1.02;
+  margin:18px 0 20px;
+}
+.hero h1 em{
+  font-style:normal; color:var(--teal);
+  background:linear-gradient(180deg, #2fd7c7, #19B3A6);
+  -webkit-background-clip:text; background-clip:text; color:transparent;
+}
+.hero p.sub{
+  font-size:19px; line-height:1.55; color:var(--ink-mute); max-width:560px;
+}
+.hero .cta-row{display:flex; gap:12px; margin-top:28px; flex-wrap:wrap}
+.hero .meta{
+  display:flex; gap:28px; margin-top:36px; padding-top:24px;
+  border-top:1px solid var(--line);
+  color:var(--ink-dim); font-size:13px;
+}
+.hero .meta strong{color:var(--ink); font-family:var(--f-num); font-weight:600; font-size:18px; display:block}
+
+/* ===================== HERO VISUAL: Revenue Console ===================== */
+.console{
+  position:relative;
+  border:1px solid var(--line-2);
+  border-radius:16px;
+  background:
+    linear-gradient(180deg, rgba(238,233,225,.025), rgba(238,233,225,.01));
+  padding:22px;
+  box-shadow:
+    0 1px 0 rgba(255,255,255,.04) inset,
+    0 40px 80px -30px rgba(0,0,0,.6),
+    0 0 0 1px rgba(25,179,166,.05);
+}
+.console-head{display:flex; align-items:center; justify-content:space-between; margin-bottom:18px}
+.console-head .title{display:flex; align-items:center; gap:10px; font-size:13px; color:var(--ink-mute)}
+.pulse{
+  width:8px; height:8px; border-radius:50%; background:var(--teal);
+  box-shadow:0 0 0 0 rgba(25,179,166,.6);
+  animation:pulse 2s infinite;
+}
+@keyframes pulse{
+  0%{box-shadow:0 0 0 0 rgba(25,179,166,.5)}
+  70%{box-shadow:0 0 0 10px rgba(25,179,166,0)}
+  100%{box-shadow:0 0 0 0 rgba(25,179,166,0)}
+}
+.console-stats{display:grid; grid-template-columns:repeat(3,1fr); gap:12px; margin-bottom:16px}
+.stat{
+  border:1px solid var(--line); border-radius:10px; padding:14px;
+  background:rgba(238,233,225,.02);
+}
+.stat .label{font-size:11px; letter-spacing:.14em; text-transform:uppercase; color:var(--ink-dim); margin-bottom:8px; font-family:var(--f-mono)}
+.stat .value{font-family:var(--f-num); font-size:24px; font-weight:600; letter-spacing:-.01em}
+.stat .delta{font-size:12px; color:var(--emerald); margin-top:4px; font-family:var(--f-num)}
+.stat.revenue .value{color:var(--emerald)}
+.stat.promo .value{color:var(--teal)}
+
+.console-call{
+  border:1px solid var(--line-2); border-radius:10px; padding:14px 16px;
+  background:rgba(15,27,45,.5);
+  display:grid; grid-template-columns:auto 1fr auto; gap:14px; align-items:center;
+}
+.avatar{
+  width:36px;height:36px;border-radius:50%; background:linear-gradient(135deg,var(--teal),#0d6c64);
+  display:flex; align-items:center; justify-content:center; font-weight:600; color:#042723; font-size:13px;
+}
+.call-info .name{font-size:13px; font-weight:600}
+.call-info .sub{font-size:12px; color:var(--ink-dim); font-family:var(--f-mono)}
+.waveband{display:flex; gap:2px; align-items:end; height:24px}
+.waveband span{width:2px; background:var(--teal); border-radius:1px; animation:wave 1.2s ease-in-out infinite}
+.waveband span:nth-child(1){height:30%; animation-delay:0s}
+.waveband span:nth-child(2){height:60%; animation-delay:.08s}
+.waveband span:nth-child(3){height:45%; animation-delay:.16s}
+.waveband span:nth-child(4){height:80%; animation-delay:.24s}
+.waveband span:nth-child(5){height:55%; animation-delay:.32s}
+.waveband span:nth-child(6){height:70%; animation-delay:.4s}
+.waveband span:nth-child(7){height:35%; animation-delay:.48s}
+.waveband span:nth-child(8){height:65%; animation-delay:.56s}
+.waveband span:nth-child(9){height:50%; animation-delay:.64s}
+@keyframes wave{0%,100%{transform:scaleY(.5)}50%{transform:scaleY(1)}}
+
+.transcript{
+  margin-top:14px; border:1px solid var(--line); border-radius:10px;
+  background:rgba(15,27,45,.4); padding:14px 16px;
+  font-size:13px; line-height:1.55;
+}
+.transcript .t-row{display:grid; grid-template-columns:54px 1fr; gap:10px; padding:6px 0}
+.transcript .who{color:var(--ink-dim); font-family:var(--f-mono); font-size:11px; letter-spacing:.1em; text-transform:uppercase; padding-top:3px}
+.transcript .msg{color:var(--ink)}
+.transcript .who.vv{color:var(--teal)}
+.tag{
+  display:inline-block; padding:2px 8px; border-radius:999px;
+  font-size:11px; font-family:var(--f-mono); letter-spacing:.06em;
+  background:rgba(25,179,166,.12); color:var(--teal); margin-left:6px;
+}
+.tag.brass{background:rgba(199,154,75,.14); color:var(--brass)}
+
+/* Floating pipeline chip */
+.float-chip{
+  position:absolute; right:-24px; top:-24px;
+  background:var(--stone); color:var(--navy);
+  border-radius:12px; padding:14px 16px; min-width:220px;
+  box-shadow:0 20px 50px -20px rgba(0,0,0,.8);
+  border:1px solid rgba(0,0,0,.06);
+  transform:rotate(2deg);
+}
+.float-chip .t{font-size:11px; font-family:var(--f-mono); letter-spacing:.14em; text-transform:uppercase; color:var(--graphite); margin-bottom:6px}
+.float-chip .m{font-family:var(--f-display); font-weight:600; font-size:15px; letter-spacing:-.01em; line-height:1.3}
+.float-chip .s{font-size:12px; color:rgba(42,51,64,.7); margin-top:4px; font-family:var(--f-num)}
+
+/* ===================== MARQUEE / OPERATORS ===================== */
+.trust{padding:28px 0; border-bottom:1px solid var(--line); background:var(--navy-2)}
+.trust-row{display:flex; align-items:center; justify-content:space-between; gap:32px; flex-wrap:wrap; color:var(--ink-dim); font-size:13px}
+.trust-row .label{font-family:var(--f-mono); text-transform:uppercase; letter-spacing:.14em; font-size:11px}
+.logos{display:flex; gap:42px; align-items:center; flex-wrap:wrap; color:var(--ink-mute)}
+.logos span{font-family:var(--f-display); font-weight:600; letter-spacing:-.01em; font-size:17px; opacity:.72}
+
+/* ===================== PROBLEM REFRAME ===================== */
+.section{padding:120px 0; border-bottom:1px solid var(--line); position:relative}
+.section.light{background:var(--stone); color:var(--navy); border-color:rgba(15,27,45,.08)}
+.section.light .eyebrow{color:var(--graphite)}
+.section.light .eyebrow::before{background:var(--graphite)}
+.section.light h2, .section.light h3{color:var(--navy)}
+.section.light p{color:rgba(42,51,64,.75)}
+
+.section-head{display:grid; grid-template-columns:1fr 1fr; gap:64px; align-items:end; margin-bottom:56px}
+.section-head h2{font-size:clamp(34px, 3.6vw, 52px); line-height:1.05; max-width:720px}
+.section-head p{font-size:17px; line-height:1.55; color:var(--ink-mute); max-width:520px}
+
+.compare{
+  display:grid; grid-template-columns:1fr 64px 1fr; gap:0; align-items:stretch;
+  border:1px solid rgba(15,27,45,.08); border-radius:16px; overflow:hidden;
+  background:#fff;
+}
+.compare-col{padding:36px 36px 40px}
+.compare-col.bad{background:#fff}
+.compare-col.good{background:var(--navy); color:var(--ink)}
+.compare-divider{
+  background:var(--stone-2);
+  display:flex; align-items:center; justify-content:center;
+  font-family:var(--f-mono); font-size:11px; letter-spacing:.14em; color:var(--graphite);
+  writing-mode:vertical-rl; transform:rotate(180deg);
+  border-left:1px solid rgba(15,27,45,.06);
+  border-right:1px solid rgba(15,27,45,.06);
+}
+.compare h3{font-size:13px; font-family:var(--f-mono); letter-spacing:.14em; text-transform:uppercase; margin-bottom:16px}
+.compare .big{font-family:var(--f-display); font-size:32px; letter-spacing:-.02em; line-height:1.1; font-weight:600; margin-bottom:18px}
+.compare .big em{font-style:normal}
+.compare-col.bad .big em{color:var(--coral)}
+.compare-col.good .big em{color:var(--teal)}
+.compare ul{list-style:none; padding:0; margin:18px 0 0; display:grid; gap:10px}
+.compare li{font-size:14px; display:flex; gap:10px; align-items:flex-start; color:rgba(42,51,64,.78)}
+.compare-col.good li{color:var(--ink-mute)}
+.compare li::before{
+  content:""; width:6px; height:6px; border-radius:50%;
+  background:var(--coral); margin-top:8px; flex:0 0 6px;
+}
+.compare-col.good li::before{background:var(--teal)}
+.compare .row{
+  display:grid; grid-template-columns:1fr auto; align-items:center;
+  padding:12px 0; border-top:1px dashed rgba(15,27,45,.1); font-size:13px;
+}
+.compare-col.good .row{border-color:rgba(238,233,225,.1)}
+.compare .row .k{color:rgba(42,51,64,.6); font-family:var(--f-mono); font-size:11px; letter-spacing:.1em; text-transform:uppercase}
+.compare-col.good .row .k{color:var(--ink-dim)}
+.compare .row .v{font-family:var(--f-num); font-weight:600; font-size:16px}
+.compare-col.bad .v{color:var(--coral)}
+.compare-col.good .v{color:var(--emerald)}
+
+/* ===================== PILLARS ===================== */
+.pillars{display:grid; grid-template-columns:repeat(3,1fr); gap:20px}
+.pillar{
+  border:1px solid var(--line-2); border-radius:14px; padding:28px;
+  background:linear-gradient(180deg, rgba(238,233,225,.03), rgba(238,233,225,.01));
+  display:flex; flex-direction:column; gap:14px;
+  position:relative; overflow:hidden;
+}
+.pillar .idx{
+  font-family:var(--f-mono); font-size:11px; letter-spacing:.14em; color:var(--teal);
+}
+.pillar h3{font-size:22px; line-height:1.2; letter-spacing:-.015em}
+.pillar p{color:var(--ink-mute); font-size:14.5px; line-height:1.55}
+.pillar .viz{
+  margin-top:12px; border-top:1px solid var(--line); padding-top:18px;
+}
+.meter{display:grid; grid-template-columns:1fr auto; align-items:center; gap:10px; padding:6px 0; font-size:13px}
+.meter .bar{height:6px; border-radius:3px; background:rgba(238,233,225,.08); overflow:hidden; width:100%; grid-column:1/3; margin-top:4px}
+.meter .bar > i{display:block; height:100%; background:var(--teal); border-radius:3px}
+.meter .bar.bad > i{background:var(--coral)}
+.meter .label{color:var(--ink-mute); font-family:var(--f-mono); font-size:11px; letter-spacing:.1em; text-transform:uppercase}
+.meter .v{font-family:var(--f-num); font-weight:600}
+
+/* Pipeline mini visual */
+.pipe-mini{display:grid; grid-template-columns:repeat(5,1fr); gap:6px; margin-top:8px}
+.pipe-mini .node{
+  border:1px solid var(--line); border-radius:6px; padding:8px 6px;
+  font-family:var(--f-mono); font-size:10px; letter-spacing:.08em; text-transform:uppercase; text-align:center;
+  color:var(--ink-dim);
+}
+.pipe-mini .node.on{background:rgba(25,179,166,.12); color:var(--teal); border-color:rgba(25,179,166,.3)}
+
+/* Inquiry viz */
+.inq-list{display:grid; gap:8px; margin-top:8px}
+.inq-list .row{display:grid; grid-template-columns:1fr auto; align-items:center; font-size:13px; padding:6px 0; border-bottom:1px dashed rgba(238,233,225,.08)}
+.inq-list .row:last-child{border-bottom:none}
+.inq-list .row .q{color:var(--ink-mute)}
+.inq-list .row .a{color:var(--emerald); font-family:var(--f-mono); font-size:11px}
+
+/* ===================== WORKFLOW / PIPELINE ===================== */
+.pipeline-shell{
+  border-radius:18px; border:1px solid var(--line-2);
+  background:linear-gradient(180deg, rgba(238,233,225,.03), rgba(238,233,225,.01));
+  padding:32px;
+}
+.pipeline{
+  display:grid; grid-template-columns:repeat(5,1fr); gap:16px; position:relative;
+}
+.stage{
+  border:1px solid var(--line-2); border-radius:12px; padding:16px; background:rgba(15,27,45,.6);
+  position:relative; min-height:200px;
+}
+.stage-head{display:flex; justify-content:space-between; align-items:center; margin-bottom:10px}
+.stage-name{font-size:12px; font-family:var(--f-mono); letter-spacing:.14em; text-transform:uppercase; color:var(--ink-dim)}
+.stage-count{font-family:var(--f-num); font-weight:600; color:var(--teal)}
+.card-party{
+  border:1px solid var(--line); border-radius:8px; padding:10px 12px;
+  background:rgba(238,233,225,.03); margin-bottom:8px; font-size:12.5px;
+}
+.card-party .t{font-weight:600; font-family:var(--f-display); letter-spacing:-.005em}
+.card-party .s{color:var(--ink-dim); font-family:var(--f-num); margin-top:3px; font-size:11.5px}
+.card-party.active{border-color:var(--teal); background:rgba(25,179,166,.08); box-shadow:0 0 0 1px rgba(25,179,166,.25) inset}
+.card-party.risk{border-color:rgba(239,68,68,.4); background:rgba(239,68,68,.06)}
+.card-party.risk .s{color:var(--coral)}
+.card-party.done{opacity:.82}
+.card-party .chip{
+  display:inline-block; padding:2px 6px; border-radius:4px; font-family:var(--f-mono); font-size:10px; letter-spacing:.08em;
+  background:rgba(16,185,129,.12); color:var(--emerald); text-transform:uppercase; margin-top:6px;
+}
+.card-party .chip.brass{background:rgba(199,154,75,.15); color:var(--brass)}
+.card-party .chip.coral{background:rgba(239,68,68,.14); color:var(--coral)}
+
+.pipeline::before{
+  /* connector line */
+  content:""; position:absolute; top:46px; left:5%; right:5%; height:1px;
+  background:linear-gradient(90deg, transparent, var(--line-2), var(--line-2), transparent);
+  z-index:0;
+}
+
+.pipeline-foot{
+  display:grid; grid-template-columns:repeat(4, 1fr); gap:20px; margin-top:28px;
+  padding-top:24px; border-top:1px solid var(--line);
+}
+.pipeline-stat .l{font-size:11px; font-family:var(--f-mono); letter-spacing:.14em; text-transform:uppercase; color:var(--ink-dim); margin-bottom:6px}
+.pipeline-stat .v{font-family:var(--f-num); font-size:26px; font-weight:600; letter-spacing:-.01em}
+.pipeline-stat .d{font-size:12px; color:var(--emerald); font-family:var(--f-num); margin-top:2px}
+
+/* ===================== DEMO / PROOF ===================== */
+.demo-grid{display:grid; grid-template-columns:1.1fr .9fr; gap:32px; align-items:stretch}
+.player{
+  border:1px solid rgba(15,27,45,.1); border-radius:18px; padding:28px;
+  background:#fff; color:var(--navy); display:flex; flex-direction:column; gap:18px;
+  position:relative; overflow:hidden;
+}
+.player .meta-row{display:flex; justify-content:space-between; align-items:center; font-family:var(--f-mono); font-size:11px; letter-spacing:.14em; text-transform:uppercase; color:var(--graphite)}
+.player h3{font-size:26px; letter-spacing:-.02em; line-height:1.2; color:var(--navy)}
+.player .controls{
+  display:flex; align-items:center; gap:16px; padding:16px;
+  border-radius:12px; background:var(--stone-2); border:1px solid rgba(15,27,45,.06);
+}
+.play-btn{
+  width:52px; height:52px; border-radius:50%; border:none; cursor:pointer;
+  background:var(--navy); color:var(--teal); display:flex; align-items:center; justify-content:center;
+  flex:0 0 52px;
+}
+.play-btn:hover{background:var(--graphite)}
+.scrubber{flex:1; position:relative; height:28px; display:flex; align-items:center}
+.scrub-line{height:3px; background:rgba(15,27,45,.1); border-radius:2px; width:100%; position:relative; overflow:hidden}
+.scrub-line > i{display:block; height:100%; width:34%; background:var(--navy); border-radius:2px}
+.time{font-family:var(--f-num); font-size:13px; color:var(--graphite); min-width:86px; text-align:right}
+.wave-static{display:flex; gap:2px; align-items:center; height:28px; flex:1;}
+.wave-static span{display:block; width:2px; background:rgba(15,27,45,.25); border-radius:1px}
+
+.demo-transcript{
+  border:1px solid var(--line-2); border-radius:18px; padding:28px;
+  background:var(--navy-2);
+}
+.demo-transcript h4{font-size:13px; font-family:var(--f-mono); letter-spacing:.14em; text-transform:uppercase; color:var(--ink-dim); margin-bottom:16px}
+.demo-transcript .t-row{padding:10px 0; border-bottom:1px solid var(--line); font-size:14px; line-height:1.55}
+.demo-transcript .t-row:last-child{border-bottom:none}
+.demo-transcript .who{font-family:var(--f-mono); font-size:11px; letter-spacing:.1em; text-transform:uppercase; color:var(--ink-dim); margin-bottom:4px}
+.demo-transcript .who.vv{color:var(--teal)}
+.demo-transcript .msg{color:var(--ink)}
+
+.proof-row{
+  display:grid; grid-template-columns:repeat(4,1fr); gap:0;
+  margin-top:36px; border:1px solid var(--line-2); border-radius:12px; overflow:hidden;
+}
+.proof-item{padding:24px; border-right:1px solid var(--line-2)}
+.proof-item:last-child{border-right:none}
+.proof-item .v{font-family:var(--f-num); font-size:34px; font-weight:600; letter-spacing:-.015em}
+.proof-item .v .u{font-size:18px; color:var(--ink-dim); margin-left:2px}
+.proof-item .l{font-size:12px; color:var(--ink-mute); margin-top:6px; line-height:1.4}
+
+/* ===================== MULTI-LOCATION ===================== */
+.multi{
+  display:grid; grid-template-columns:1.1fr .9fr; gap:64px; align-items:center;
+}
+.multi-viz{
+  border:1px solid var(--line-2); border-radius:18px; padding:24px;
+  background:linear-gradient(180deg, rgba(238,233,225,.03), rgba(238,233,225,.01));
+}
+.loc-row{
+  display:grid; grid-template-columns:140px 1fr 100px 90px; gap:16px; align-items:center;
+  padding:14px 0; border-bottom:1px solid var(--line);
+}
+.loc-row:last-child{border-bottom:none}
+.loc-row .nm{font-weight:600; font-family:var(--f-display); letter-spacing:-.01em}
+.loc-row .nm span{display:block; font-size:12px; color:var(--ink-dim); font-weight:400; font-family:var(--f-mono); letter-spacing:.05em; margin-top:2px}
+.loc-row .bar{height:8px; background:rgba(238,233,225,.08); border-radius:4px; overflow:hidden; position:relative}
+.loc-row .bar > i{display:block; height:100%; background:var(--teal); border-radius:4px}
+.loc-row .pct{font-family:var(--f-num); font-weight:600; text-align:right}
+.loc-row .pct.up{color:var(--emerald)}
+.loc-row .status{font-family:var(--f-mono); font-size:11px; letter-spacing:.1em; text-transform:uppercase; color:var(--teal); text-align:right}
+.multi-head{padding-bottom:14px; border-bottom:1px solid var(--line); margin-bottom:8px; display:flex; justify-content:space-between; align-items:baseline}
+.multi-head .t{font-family:var(--f-mono); font-size:11px; letter-spacing:.14em; text-transform:uppercase; color:var(--ink-dim)}
+.multi-head .v{font-family:var(--f-num); font-size:14px; color:var(--ink-mute)}
+
+/* ===================== DASHBOARD PREVIEW ===================== */
+.dash{
+  border:1px solid rgba(15,27,45,.08); border-radius:18px; overflow:hidden; background:#fff;
+  box-shadow:0 40px 80px -40px rgba(15,27,45,.3);
+}
+.dash-top{
+  padding:18px 24px; border-bottom:1px solid rgba(15,27,45,.06);
+  display:flex; align-items:center; justify-content:space-between;
+  background:var(--stone-2);
+}
+.dash-top .tabs{display:flex; gap:20px}
+.dash-top .tabs a{font-size:13px; color:rgba(42,51,64,.6); padding:6px 0}
+.dash-top .tabs a.active{color:var(--navy); font-weight:600; border-bottom:2px solid var(--navy)}
+.dash-top .window{display:flex; gap:6px}
+.dash-top .window i{width:10px; height:10px; border-radius:50%; background:rgba(15,27,45,.15)}
+.dash-body{padding:28px; background:#fff; color:var(--navy)}
+.dash-kpis{display:grid; grid-template-columns:repeat(4,1fr); gap:16px; margin-bottom:24px}
+.kpi{padding:18px; border:1px solid rgba(15,27,45,.08); border-radius:12px}
+.kpi .l{font-size:11px; font-family:var(--f-mono); letter-spacing:.14em; text-transform:uppercase; color:rgba(42,51,64,.55); margin-bottom:10px}
+.kpi .v{font-family:var(--f-num); font-size:30px; font-weight:600; letter-spacing:-.015em; color:var(--navy)}
+.kpi .v .u{font-size:16px; color:rgba(42,51,64,.5); margin-left:3px}
+.kpi .d{font-size:12px; color:var(--emerald); margin-top:6px; font-family:var(--f-num); font-weight:500}
+.kpi.accent{background:var(--navy); color:var(--ink); border-color:var(--navy)}
+.kpi.accent .l{color:rgba(238,233,225,.55)}
+.kpi.accent .v{color:var(--teal)}
+.kpi.accent .d{color:var(--emerald)}
+
+.dash-lower{display:grid; grid-template-columns:1.3fr .7fr; gap:20px}
+.chart{
+  border:1px solid rgba(15,27,45,.08); border-radius:12px; padding:20px;
+}
+.chart-head{display:flex; justify-content:space-between; align-items:baseline; margin-bottom:14px}
+.chart-head h4{font-size:15px; color:var(--navy); letter-spacing:-.01em}
+.chart-head .legend{display:flex; gap:14px; font-size:12px; color:rgba(42,51,64,.6); font-family:var(--f-mono); letter-spacing:.06em}
+.chart-head .legend span{display:inline-flex; align-items:center; gap:6px}
+.chart-head .legend i{width:8px; height:8px; border-radius:2px; display:inline-block}
+.chart-plot{height:160px; display:flex; align-items:end; gap:6px; padding-top:4px}
+.bar-col{flex:1; display:flex; flex-direction:column; gap:3px; align-items:stretch; height:100%; justify-content:end}
+.bar-col i{display:block; border-radius:3px 3px 0 0}
+.bar-col i.a{background:var(--navy)}
+.bar-col i.b{background:var(--teal)}
+.chart-x{display:flex; gap:6px; margin-top:8px; font-family:var(--f-mono); font-size:10px; letter-spacing:.08em; color:rgba(42,51,64,.45); text-transform:uppercase}
+.chart-x span{flex:1; text-align:center}
+
+.activity{
+  border:1px solid rgba(15,27,45,.08); border-radius:12px; padding:20px;
+}
+.activity h4{font-size:15px; color:var(--navy); margin-bottom:14px; letter-spacing:-.01em}
+.act-row{padding:10px 0; border-bottom:1px dashed rgba(15,27,45,.1); font-size:13px; display:grid; grid-template-columns:auto 1fr auto; gap:10px; align-items:center}
+.act-row:last-child{border-bottom:none}
+.dot{width:8px; height:8px; border-radius:50%}
+.dot.t{background:var(--teal)}
+.dot.e{background:var(--emerald)}
+.dot.b{background:var(--brass)}
+.dot.c{background:var(--coral)}
+.act-row .msg{color:var(--navy)}
+.act-row .time{font-family:var(--f-mono); font-size:11px; color:rgba(42,51,64,.45)}
+
+/* ===================== FINAL CTA ===================== */
+.final-cta{
+  padding:120px 0;
+  background:
+    radial-gradient(900px 500px at 50% 120%, rgba(25,179,166,.15), transparent 60%),
+    var(--navy-2);
+  text-align:center; border-bottom:1px solid var(--line);
+  position:relative; overflow:hidden;
+}
+.final-cta::before{
+  content:""; position:absolute; inset:0;
+  background-image:
+    linear-gradient(to right, rgba(238,233,225,.04) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(238,233,225,.04) 1px, transparent 1px);
+  background-size:80px 80px;
+  mask-image:radial-gradient(600px 400px at 50% 50%, #000 10%, transparent 70%);
+  pointer-events:none;
+}
+.final-cta h2{font-size:clamp(38px, 4.6vw, 68px); line-height:1.05; margin:18px auto 18px; max-width:900px}
+.final-cta p{color:var(--ink-mute); font-size:18px; max-width:620px; margin:0 auto 30px}
+.final-cta .cta-row{display:flex; gap:12px; justify-content:center; flex-wrap:wrap}
+
+/* ===================== FOOTER ===================== */
+footer{padding:56px 0 40px; background:var(--navy-2); color:var(--ink-mute); font-size:13px}
+.foot-top{display:grid; grid-template-columns:1.3fr 1fr 1fr 1fr; gap:48px; margin-bottom:40px}
+.foot-top h5{color:var(--ink); font-size:12px; font-family:var(--f-mono); letter-spacing:.14em; text-transform:uppercase; margin:0 0 14px}
+.foot-top ul{list-style:none; padding:0; margin:0; display:grid; gap:10px}
+.foot-top a:hover{color:var(--ink)}
+.foot-bottom{padding-top:24px; border-top:1px solid var(--line); display:flex; justify-content:space-between; flex-wrap:wrap; gap:12px; font-size:12px; color:var(--ink-dim); font-family:var(--f-mono); letter-spacing:.06em; text-transform:uppercase}
+
+/* ===================== RESPONSIVE ===================== */
+@media (max-width:960px){
+  .container{padding:0 20px}
+  .hero{padding:48px 0 48px}
+  .hero-grid{grid-template-columns:1fr; gap:40px}
+  .nav ul{display:none}
+  .section{padding:72px 0}
+  .section-head{grid-template-columns:1fr; gap:20px; margin-bottom:36px}
+  .compare{grid-template-columns:1fr}
+  .compare-divider{writing-mode:horizontal-tb; transform:none; padding:10px; border-left:none; border-right:none; border-top:1px solid rgba(15,27,45,.06); border-bottom:1px solid rgba(15,27,45,.06)}
+  .pillars{grid-template-columns:1fr}
+  .pipeline{grid-template-columns:1fr; gap:10px}
+  .pipeline::before{display:none}
+  .pipeline-foot{grid-template-columns:repeat(2,1fr); gap:16px}
+  .demo-grid{grid-template-columns:1fr}
+  .proof-row{grid-template-columns:repeat(2,1fr)}
+  .proof-item{border-right:none; border-bottom:1px solid var(--line-2)}
+  .proof-item:nth-child(even){border-right:none}
+  .multi{grid-template-columns:1fr; gap:32px}
+  .dash-kpis{grid-template-columns:repeat(2,1fr)}
+  .dash-lower{grid-template-columns:1fr}
+  .foot-top{grid-template-columns:1fr 1fr; gap:24px}
+  .loc-row{grid-template-columns:120px 1fr 70px; }
+  .loc-row .status{display:none}
+  .float-chip{right:8px; top:-10px; min-width:180px}
+  .nav-cta .btn-ghost{display:none}
+}
+
+/* ===================== TWEAKS ===================== */
+.tweaks{
+  position:fixed; right:20px; bottom:20px; z-index:60;
+  width:280px;
+  background:#0B1422; border:1px solid var(--line-2); border-radius:12px;
+  padding:16px; box-shadow:0 30px 60px -20px rgba(0,0,0,.7);
+  display:none;
+}
+.tweaks.on{display:block}
+.tweaks h5{font-family:var(--f-mono); font-size:11px; letter-spacing:.14em; text-transform:uppercase; color:var(--ink-dim); margin:0 0 12px; display:flex; justify-content:space-between; align-items:center}
+.tweaks h5 button{background:transparent; border:none; color:var(--ink-mute); cursor:pointer; font-size:16px}
+.tweaks .group{margin-bottom:14px}
+.tweaks .group label{display:block; font-size:11px; font-family:var(--f-mono); letter-spacing:.1em; text-transform:uppercase; color:var(--ink-dim); margin-bottom:6px}
+.tweaks .opts{display:flex; gap:6px; flex-wrap:wrap}
+.tweaks .opts button{
+  flex:1; min-width:0; padding:8px 10px; font-size:12px; border-radius:6px;
+  border:1px solid var(--line-2); background:transparent; color:var(--ink-mute); cursor:pointer;
+  font-family:var(--f-sans);
+}
+.tweaks .opts button.on{background:var(--teal); color:#042723; border-color:var(--teal)}
+.tweaks .swatch{display:flex; gap:8px}
+.tweaks .swatch button{width:28px; height:28px; border-radius:6px; border:2px solid transparent; cursor:pointer; padding:0}
+.tweaks .swatch button.on{border-color:var(--ink)}
+
+/* Theme: daylight */
+body.theme-day{background:var(--stone); color:var(--navy)}
+body.theme-day .nav{background:rgba(246,242,235,.85); border-color:rgba(15,27,45,.08)}
+body.theme-day .nav ul{color:rgba(42,51,64,.7)}
+body.theme-day .hero{background:
+    radial-gradient(1100px 500px at 85% -10%, rgba(25,179,166,.12), transparent 60%),
+    radial-gradient(700px 400px at 10% 100%, rgba(199,154,75,.1), transparent 70%),
+    var(--stone);
+  color:var(--navy); border-color:rgba(15,27,45,.08)}
+body.theme-day .hero::before{
+  background-image:
+    linear-gradient(to right, rgba(15,27,45,.05) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(15,27,45,.05) 1px, transparent 1px);
+}
+body.theme-day .hero p.sub{color:rgba(42,51,64,.75)}
+body.theme-day .hero .meta{color:rgba(42,51,64,.55); border-color:rgba(15,27,45,.08)}
+body.theme-day .hero .meta strong{color:var(--navy)}
+body.theme-day .hero h1 em{background:linear-gradient(180deg, #19B3A6, #0F7E75); -webkit-background-clip:text; background-clip:text; color:transparent}
+body.theme-day .console{background:#fff; border-color:rgba(15,27,45,.08); box-shadow:0 30px 60px -30px rgba(15,27,45,.3)}
+body.theme-day .console .stat{border-color:rgba(15,27,45,.08); background:var(--stone-2)}
+body.theme-day .console .stat .value{color:var(--navy)}
+body.theme-day .console-call{background:var(--stone-2); border-color:rgba(15,27,45,.08)}
+body.theme-day .console .call-info .name{color:var(--navy)}
+body.theme-day .transcript{background:var(--stone-2); border-color:rgba(15,27,45,.08)}
+body.theme-day .transcript .msg{color:var(--navy)}
+body.theme-day .trust{background:var(--stone-2); border-color:rgba(15,27,45,.08)}
+body.theme-day .trust-row, body.theme-day .logos{color:rgba(42,51,64,.55)}
+body.theme-day .logos span{color:rgba(42,51,64,.6)}
+body.theme-day .section{border-color:rgba(15,27,45,.08)}
+body.theme-day .section:not(.light){background:var(--stone); color:var(--navy)}
+body.theme-day .section h2{color:var(--navy)}
+body.theme-day .section p{color:rgba(42,51,64,.7)}
+body.theme-day .section-head p{color:rgba(42,51,64,.7)}
+body.theme-day .pillar{background:#fff; border-color:rgba(15,27,45,.08)}
+body.theme-day .pillar p{color:rgba(42,51,64,.7)}
+body.theme-day .pillar .viz{border-color:rgba(15,27,45,.08)}
+body.theme-day .pipeline-shell{background:#fff; border-color:rgba(15,27,45,.08)}
+body.theme-day .stage{background:var(--stone-2); border-color:rgba(15,27,45,.08)}
+body.theme-day .card-party{background:#fff; border-color:rgba(15,27,45,.08)}
+body.theme-day .stage-name{color:rgba(42,51,64,.55)}
+body.theme-day .multi-viz{background:#fff; border-color:rgba(15,27,45,.08)}
+body.theme-day .loc-row .bar{background:rgba(15,27,45,.08)}
+body.theme-day .loc-row{border-color:rgba(15,27,45,.08)}
+body.theme-day .final-cta{background:var(--stone-2)}
+body.theme-day .final-cta h2{color:var(--navy)}
+body.theme-day .final-cta p{color:rgba(42,51,64,.7)}
+body.theme-day footer{background:var(--stone-2); color:rgba(42,51,64,.65)}
+body.theme-day footer h5{color:var(--navy)}
+body.theme-day .foot-bottom{border-color:rgba(15,27,45,.08)}
+body.theme-day .section.light{background:#fff}
+
+/* Accent variants */
+body.accent-brass{--teal:#C79A4B; --teal-soft:rgba(199,154,75,.14)}
+body.accent-emerald{--teal:#10B981; --teal-soft:rgba(16,185,129,.12)}
+</style>
+</head>
+<body>
+
+<!-- ========================= NAV ========================= -->
+<nav class="nav">
+  <div class="container nav-inner">
+    <a class="brand" href="#">
+      <span class="mark">
+        <svg width="26" height="26" viewBox="0 0 26 26" fill="none">
+          <path d="M3 4 L10 20 L13 13 L16 20 L23 4" stroke="currentColor" stroke-width="2.2" stroke-linecap="square" stroke-linejoin="miter"/>
+        </svg>
+      </span>
+      VenueVox
+    </a>
+    <ul>
+      <li><a href="#problem">Problem</a></li>
+      <li><a href="#pillars">Product</a></li>
+      <li><a href="#workflow">Party Pipeline</a></li>
+      <li><a href="#demo">Demo</a></li>
+      <li><a href="#dashboard">Dashboard</a></li>
+      <li><a href="#pricing">Pricing</a></li>
+    </ul>
+    <div class="nav-cta">
+      <button class="btn btn-ghost btn-sm">Hear it sell</button>
+      <button class="btn btn-primary btn-sm">Book a demo <span class="arrow">→</span></button>
+    </div>
+  </div>
+</nav>
+
+<!-- ========================= HERO ========================= -->
+<section class="hero">
+  <div class="container hero-grid">
+    <div>
+      <span class="eyebrow">Front-end revenue layer · Eatertainment</span>
+      <h1>Your phone gets answered.<br/><em>But is it selling?</em></h1>
+      <p class="sub">
+        VenueVox answers calls, announces promos, and manages party bookings to deposit —
+        with the consistency of your best employee, at a fraction of the cost.
+        No training. No turnover. No skipped upsells.
+      </p>
+      <div class="cta-row">
+        <button class="btn btn-primary">Book a demo <span class="arrow">→</span></button>
+        <button class="btn btn-ghost">
+          <svg width="14" height="14" viewBox="0 0 14 14" fill="currentColor"><path d="M3 2 L11 7 L3 12 Z"/></svg>
+          Hear VenueVox sell a promo
+        </button>
+      </div>
+      <div class="meta">
+        <div><strong class="num">94%</strong>promo delivery rate</div>
+        <div><strong class="num">48 hrs</strong>inquiry → deposit</div>
+        <div><strong class="num">$399<span style="opacity:.5; font-size:13px">/mo</span></strong>replaces $17/hr labor</div>
+      </div>
+    </div>
+
+    <!-- Hero visual: Live Revenue Console -->
+    <div style="position:relative">
+      <div class="console">
+        <div class="console-head">
+          <div class="title"><span class="pulse"></span> LIVE · Saturday 7:42pm · Strike City — Midtown</div>
+          <div class="mono" style="font-size:11px; color:var(--ink-dim); letter-spacing:.12em">WK 16</div>
+        </div>
+
+        <div class="console-stats">
+          <div class="stat promo">
+            <div class="label">Promo delivery</div>
+            <div class="value num">94.3<span style="font-size:15px; color:var(--ink-dim)">%</span></div>
+            <div class="delta">↑ from 22% human baseline</div>
+          </div>
+          <div class="stat revenue">
+            <div class="label">Deposits today</div>
+            <div class="value num">$4,150</div>
+            <div class="delta">+12 parties confirmed</div>
+          </div>
+          <div class="stat">
+            <div class="label">Calls sold</div>
+            <div class="value num">38 <span style="font-size:14px; color:var(--ink-dim)">/ 41</span></div>
+            <div class="delta" style="color:var(--ink-mute)">3 escalated to GM</div>
+          </div>
+        </div>
+
+        <div class="console-call">
+          <div class="avatar">VV</div>
+          <div class="call-info">
+            <div class="name">Caller · (214) 555‑0139 <span class="tag">Party lead</span></div>
+            <div class="sub">00:42 · Sarah, booking 15 kids for Sat</div>
+          </div>
+          <div class="waveband" aria-hidden="true">
+            <span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span>
+          </div>
+        </div>
+
+        <div class="transcript">
+          <div class="t-row"><div class="who vv">VV</div><div class="msg">Perfect — Saturday at 4pm, 15 kids on our Ultimate package. Since you're booking before Wednesday, you qualify for the <b>game card bonus: load $100, we add $20.</b> Want me to add that to the package?</div></div>
+          <div class="t-row"><div class="who">Guest</div><div class="msg">Yes, add it. Can you send the deposit link?</div></div>
+          <div class="t-row"><div class="who vv">VV</div><div class="msg">Sending a secure link to this number now. <span class="tag brass">Hold · 24h</span> <span class="tag">Upsell +$45</span></div></div>
+        </div>
+      </div>
+
+      <div class="float-chip">
+        <div class="t">+ Deposit collected</div>
+        <div class="m">Party confirmed — Sarah, 15 guests</div>
+        <div class="s">Sat 4:00pm · Lane 12 · $150 deposit · +$45 upsell</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ========================= TRUST ========================= -->
+<section class="trust">
+  <div class="container trust-row">
+    <div class="label">Built for the floor</div>
+    <div class="logos">
+      <span>Strike City</span>
+      <span>Pinline Social</span>
+      <span>Axe &amp; Ale Co.</span>
+      <span>Neon Alley</span>
+      <span>Grand Pin Group</span>
+      <span>Circuit Barcade</span>
+    </div>
+  </div>
+</section>
+
+<!-- ========================= PROBLEM REFRAME ========================= -->
+<section class="section light" id="problem">
+  <div class="container">
+    <div class="section-head">
+      <div>
+        <span class="eyebrow">The real leak</span>
+        <h2 style="margin-top:14px">It's not missed calls.<br/>It's answered calls that didn't sell.</h2>
+      </div>
+      <p>Your multi‑unit already pays someone to pick up. The variance isn't demand — it's execution. Most front desks mention this weekend's promo to <b>1 in 5 callers</b>. Your best does it <b>every time</b>.</p>
+    </div>
+
+    <div class="compare">
+      <div class="compare-col bad">
+        <h3>$17/hr · Part‑time front desk</h3>
+        <div class="big">Call <em>answered</em>. Revenue <em>left on the floor.</em></div>
+        <p>Phone gets picked up. Question gets answered. Promo doesn't. Lead sits on a sticky note. Deposit never lands. Next week a new hire starts from zero.</p>
+        <ul>
+          <li>Mentions weekend promo ~20% of calls</li>
+          <li>Party leads live in a notebook, not a pipeline</li>
+          <li>Upsells drop the moment training ends</li>
+          <li>Inconsistent across shifts, worse across locations</li>
+        </ul>
+        <div class="row"><div class="k">Promo delivered</div><div class="v">22%</div></div>
+        <div class="row"><div class="k">Inquiry → deposit</div><div class="v">38%</div></div>
+        <div class="row"><div class="k">Cost per shift</div><div class="v">$136</div></div>
+      </div>
+
+      <div class="compare-divider">vs.</div>
+
+      <div class="compare-col good">
+        <h3>$399/mo · VenueVox</h3>
+        <div class="big">Call <em>answered.</em> Revenue <em>captured.</em></div>
+        <p style="color: rgb(238, 241, 245)">Every caller hears the current promo. Every party inquiry enters a pipeline. Deposit links go out. Follow‑ups fire automatically. The solved state — every shift, every location, every time.</p>
+        <ul>
+          <li>Announces the active promo on every call</li>
+          <li>Party pipeline: inquiry → hold → deposit → confirmed</li>
+          <li>Upsell attempted on every qualifying package</li>
+          <li>One script, every location — Tuesday and Saturday</li>
+        </ul>
+        <div class="row"><div class="k">Promo delivered</div><div class="v">94%</div></div>
+        <div class="row"><div class="k">Inquiry → deposit</div><div class="v">71%</div></div>
+        <div class="row"><div class="k">Fully loaded cost</div><div class="v">$13 / shift</div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ========================= THREE PILLARS ========================= -->
+<section class="section" id="pillars">
+  <div class="container">
+    <div class="section-head">
+      <div>
+        <span class="eyebrow">Three things we do, always</span>
+        <h2 style="margin-top:14px">The consistency of your best employee.<br/>Every call, every location.</h2>
+      </div>
+      <p>VenueVox isn't a voice bot — it's a front‑end revenue layer. It announces the promo, closes the party, and handles the rest so your floor stays on the floor.</p>
+    </div>
+
+    <div class="pillars">
+      <!-- Pillar 1 -->
+      <div class="pillar">
+        <div class="idx">01 · PROMO CONSISTENCY</div>
+        <h3>Every caller hears the promo.</h3>
+        <p>Your weekend special lives on the sign. It should live on every call, too. VenueVox announces the active promo on every qualifying call — no training, no reminders, no "I forgot."</p>
+        <div class="viz">
+          <div class="meter">
+            <div class="label">VenueVox · this week</div>
+            <div class="v num" style="color:var(--teal)">94%</div>
+            <div class="bar"><i style="width:94%"></i></div>
+          </div>
+          <div class="meter">
+            <div class="label">Part‑time staff · same venue</div>
+            <div class="v num" style="color:var(--coral)">22%</div>
+            <div class="bar bad"><i style="width:22%"></i></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Pillar 2 -->
+      <div class="pillar">
+        <div class="idx">02 · PARTY PIPELINE</div>
+        <h3>Party bookings closed to deposit.</h3>
+        <p>Birthdays are the highest‑margin line. Each booking is 4–5 calls. VenueVox runs the whole play: capture the inquiry, present the package, hold the date, send the link, follow up if payment stalls.</p>
+        <div class="viz">
+          <div class="pipe-mini">
+            <div class="node on">Inquiry</div>
+            <div class="node on">Hold</div>
+            <div class="node on">Sent</div>
+            <div class="node">Paid</div>
+            <div class="node">Confirm</div>
+          </div>
+          <div class="meter" style="margin-top:12px">
+            <div class="label">Inquiry → deposit · 48 hrs</div>
+            <div class="v num" style="color:var(--emerald)">71%</div>
+            <div class="bar"><i style="width:71%; background:var(--emerald)"></i></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Pillar 3 -->
+      <div class="pillar">
+        <div class="idx">03 · GENERAL INQUIRIES</div>
+        <h3>General inquiries at zero labor cost.</h3>
+        <p>"When do you close?" "Are you open Sunday?" "How much is bowling?" Dozens per day, zero revenue, $17/hr to answer. VenueVox handles every one — accurately, instantly, without pulling a single person off the floor.</p>
+        <div class="viz">
+          <div class="inq-list">
+            <div class="row"><div class="q">"Are you open Easter Sunday?"</div><div class="a">— 0s · resolved</div></div>
+            <div class="row"><div class="q">"Cost per lane on Fridays?"</div><div class="a">— 0s · resolved</div></div>
+            <div class="row"><div class="q">"Do you take walk‑ins after 9?"</div><div class="a">— 0s · resolved</div></div>
+            <div class="row"><div class="q">"Is the kitchen open till close?"</div><div class="a">— 0s · resolved</div></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ========================= WORKFLOW / PIPELINE ========================= -->
+<section class="section" id="workflow" style="padding-top:0">
+  <div class="container">
+    <div class="section-head">
+      <div>
+        <span class="eyebrow">Party workflow</span>
+        <h2 style="margin-top:14px">A pipeline, not a sticky note.</h2>
+      </div>
+      <p>Every party lead enters a structured pipeline. Every stage has a next action. Every card shows who, when, and how much — at a glance from the floor.</p>
+    </div>
+
+    <div class="pipeline-shell">
+      <div class="pipeline">
+        <!-- 1 -->
+        <div class="stage">
+          <div class="stage-head"><div class="stage-name">Inquiry</div><div class="stage-count num">14</div></div>
+          <div class="card-party">
+            <div class="t">Garcia · 12 guests</div>
+            <div class="s">Sat · package TBD</div>
+            <span class="chip">New · 2m ago</span>
+          </div>
+          <div class="card-party">
+            <div class="t">Chen · 18 guests</div>
+            <div class="s">Sun · Ultimate</div>
+            <span class="chip">New · 6m ago</span>
+          </div>
+          <div class="card-party">
+            <div class="t">Patel · 9 guests</div>
+            <div class="s">Fri · Classic</div>
+            <span class="chip">New · 11m ago</span>
+          </div>
+        </div>
+
+        <!-- 2 -->
+        <div class="stage">
+          <div class="stage-head"><div class="stage-name">Hold</div><div class="stage-count num">9</div></div>
+          <div class="card-party active">
+            <div class="t">Sarah · 15 guests</div>
+            <div class="s">Sat 4:00p · Lane 12</div>
+            <span class="chip brass">24h hold</span>
+          </div>
+          <div class="card-party">
+            <div class="t">Nguyen · 22 guests</div>
+            <div class="s">Sat 6:30p · Lanes 4‑6</div>
+            <span class="chip brass">24h hold</span>
+          </div>
+        </div>
+
+        <!-- 3 -->
+        <div class="stage">
+          <div class="stage-head"><div class="stage-name">Deposit sent</div><div class="stage-count num">7</div></div>
+          <div class="card-party">
+            <div class="t">Brooks · 14 guests</div>
+            <div class="s">Sun 2:00p · Bay 3</div>
+            <span class="chip brass">Sent · 1h</span>
+          </div>
+          <div class="card-party risk">
+            <div class="t">Rivera · 20 guests</div>
+            <div class="s">Sat 7:00p · Lanes 10‑12</div>
+            <span class="chip coral">Auto‑follow‑up · 2h</span>
+          </div>
+        </div>
+
+        <!-- 4 -->
+        <div class="stage">
+          <div class="stage-head"><div class="stage-name">Deposit paid</div><div class="stage-count num">12</div></div>
+          <div class="card-party done">
+            <div class="t">Okonkwo · 16 guests</div>
+            <div class="s">Sat 5:00p · +$45 upsell</div>
+            <span class="chip">$150 collected</span>
+          </div>
+          <div class="card-party done">
+            <div class="t">Levine · 10 guests</div>
+            <div class="s">Fri 7:30p · Ultimate</div>
+            <span class="chip">$150 collected</span>
+          </div>
+        </div>
+
+        <!-- 5 -->
+        <div class="stage">
+          <div class="stage-head"><div class="stage-name">Confirmed</div><div class="stage-count num">28</div></div>
+          <div class="card-party done">
+            <div class="t">Delgado · 24 guests</div>
+            <div class="s">Sat 8:00p · Party room 2</div>
+            <span class="chip">Synced to PCS</span>
+          </div>
+          <div class="card-party done">
+            <div class="t">Park · 11 guests</div>
+            <div class="s">Sun 1:00p · Bay 5</div>
+            <span class="chip">Synced to PCS</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="pipeline-foot">
+        <div class="pipeline-stat">
+          <div class="l">Pipeline value</div>
+          <div class="v num">$28,430</div>
+          <div class="d">+$4,150 today</div>
+        </div>
+        <div class="pipeline-stat">
+          <div class="l">Deposits collected · wk</div>
+          <div class="v num">$12,600</div>
+          <div class="d">84 parties</div>
+        </div>
+        <div class="pipeline-stat">
+          <div class="l">Holds at risk</div>
+          <div class="v num" style="color:var(--coral)">2</div>
+          <div class="d" style="color:var(--coral)">Auto‑follow‑up armed</div>
+        </div>
+        <div class="pipeline-stat">
+          <div class="l">Upsell conversion</div>
+          <div class="v num">41%</div>
+          <div class="d">+$1,845 attached</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ========================= DEMO / PROOF ========================= -->
+<section class="section light" id="demo">
+  <div class="container">
+    <div class="section-head">
+      <div>
+        <span class="eyebrow">Hear it sell</span>
+        <h2 style="margin-top:14px">Call the demo line.<br/>Hear VenueVox close a party.</h2>
+      </div>
+      <p>Modeled on a real bowling‑and‑arcade venue. It announces the weekend promo, presents party packages, places a 24‑hour hold, and sends a deposit link — end to end, on the phone.</p>
+    </div>
+
+    <div class="demo-grid">
+      <!-- Player -->
+      <div class="player">
+        <div class="meta-row">
+          <span>Demo · Strike City · Party inquiry</span>
+          <span class="num">00:42 / 02:18</span>
+        </div>
+        <h3>"I'm planning my daughter's 10th birthday — do you have space Saturday?"</h3>
+
+        <div class="controls">
+          <button class="play-btn" id="playBtn" aria-label="Play demo">
+            <svg width="18" height="18" viewBox="0 0 14 14" fill="currentColor"><path d="M3 2 L11 7 L3 12 Z"/></svg>
+          </button>
+          <div class="wave-static" id="wave"></div>
+          <div class="time num" id="timeLabel">00:42</div>
+        </div>
+
+        <div style="display:flex; gap:8px; flex-wrap:wrap">
+          <span class="tag" style="background:rgba(15,27,45,.08); color:var(--graphite)">Promo announced</span>
+          <span class="tag" style="background:rgba(25,179,166,.12); color:var(--teal)">Package presented</span>
+          <span class="tag" style="background:rgba(199,154,75,.14); color:var(--brass)">Hold placed</span>
+          <span class="tag" style="background:rgba(16,185,129,.12); color:var(--emerald)">Deposit link sent</span>
+        </div>
+
+        <div style="display:flex; gap:12px; margin-top:4px">
+          <button class="btn btn-dark">Call demo: (888) 555‑VOXX</button>
+          <button class="btn btn-ghost" style="color:var(--navy); border-color:rgba(15,27,45,.15)">Download transcript</button>
+        </div>
+      </div>
+
+      <!-- Transcript -->
+      <div class="demo-transcript">
+        <h4>Transcript · T+00:18 to 00:42</h4>
+        <div class="t-row"><div class="who vv">VenueVox</div><div class="msg">Strike City, this is VenueVox. Planning a party? Quick note — parties booked before Wednesday get our <b>game card bonus: load $100, we add $20.</b></div></div>
+        <div class="t-row"><div class="who">Guest</div><div class="msg">Oh nice. Yeah, I need Saturday afternoon. Ten kids, maybe twelve.</div></div>
+        <div class="t-row"><div class="who vv">VenueVox</div><div class="msg">Our <b>Ultimate package</b> covers 12 — two hours of bowling, pizza, soft drinks, game cards loaded. $299 flat, plus the promo bonus. I can hold Saturday at 4pm on Lane 12 for 24 hours while you check with family.</div></div>
+        <div class="t-row"><div class="who">Guest</div><div class="msg">Great, hold it. Can you send the deposit info?</div></div>
+        <div class="t-row"><div class="who vv">VenueVox</div><div class="msg">Sending the secure $150 deposit link to this number now. Auto‑follow‑up in 2 hours if it's not paid. Anything else — allergies, cake drop‑off?</div></div>
+      </div>
+    </div>
+
+    <div class="proof-row" style="border-color:rgba(15,27,45,.1); background:#fff; color:var(--navy)">
+      <div class="proof-item" style="border-color:rgba(15,27,45,.1)">
+        <div class="v num" style="color:var(--navy)">94<span class="u">%</span></div>
+        <div class="l" style="color:rgba(42,51,64,.6)">Promo delivery rate across live operators</div>
+      </div>
+      <div class="proof-item" style="border-color:rgba(15,27,45,.1)">
+        <div class="v num" style="color:var(--emerald)">+$38K</div>
+        <div class="l" style="color:rgba(42,51,64,.6)">Avg. incremental Q / location, 90 days</div>
+      </div>
+      <div class="proof-item" style="border-color:rgba(15,27,45,.1)">
+        <div class="v num" style="color:var(--navy)">48<span class="u">hrs</span></div>
+        <div class="l" style="color:rgba(42,51,64,.6)">Median inquiry → deposit window</div>
+      </div>
+      <div class="proof-item">
+        <div class="v num" style="color:var(--navy)">0<span class="u">hrs</span></div>
+        <div class="l" style="color:rgba(42,51,64,.6)">Staff time on general inquiries</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ========================= MULTI-LOCATION ========================= -->
+<section class="section" id="multi">
+  <div class="container">
+    <div class="section-head">
+      <div>
+        <span class="eyebrow">Multi‑location consistency</span>
+        <h2 style="margin-top:14px">One script. Every location.<br/>Tuesday and Saturday.</h2>
+      </div>
+      <p>Location A closes 70 parties a weekend. Location C closes 35 with the same foot traffic. The variance isn't demand — it's execution. VenueVox flattens it. Update the promo once — every site announces it by the next call.</p>
+    </div>
+
+    <div class="multi">
+      <div class="multi-viz">
+        <div class="multi-head">
+          <div class="t">Promo delivery · last 7 days</div>
+          <div class="v num">Target: 90%+ · Actual: <b style="color:var(--teal)">94%</b></div>
+        </div>
+
+        <div class="loc-row">
+          <div class="nm">Midtown<span>Bowling · 20 lanes</span></div>
+          <div class="bar"><i style="width:96%"></i></div>
+          <div class="pct up num">96%</div>
+          <div class="status">On target</div>
+        </div>
+        <div class="loc-row">
+          <div class="nm">Eastside<span>Barcade</span></div>
+          <div class="bar"><i style="width:93%"></i></div>
+          <div class="pct up num">93%</div>
+          <div class="status">On target</div>
+        </div>
+        <div class="loc-row">
+          <div class="nm">Northgate<span>Axe &amp; FEC hybrid</span></div>
+          <div class="bar"><i style="width:95%"></i></div>
+          <div class="pct up num">95%</div>
+          <div class="status">On target</div>
+        </div>
+        <div class="loc-row">
+          <div class="nm">Airport<span>Bowling · 32 lanes</span></div>
+          <div class="bar"><i style="width:91%; background:var(--brass)"></i></div>
+          <div class="pct num" style="color:var(--brass)">91%</div>
+          <div class="status" style="color:var(--brass)">Watching</div>
+        </div>
+        <div class="loc-row">
+          <div class="nm">Riverside<span>Social gaming</span></div>
+          <div class="bar"><i style="width:92%"></i></div>
+          <div class="pct up num">92%</div>
+          <div class="status">On target</div>
+        </div>
+
+        <div style="margin-top:18px; padding-top:14px; border-top:1px solid var(--line); display:flex; justify-content:space-between; align-items:center">
+          <div style="font-family:var(--f-mono); font-size:11px; letter-spacing:.1em; color:var(--ink-dim); text-transform:uppercase">Before VenueVox · same venues</div>
+          <div class="num" style="font-size:15px; color:var(--coral)">22% – 41% range</div>
+        </div>
+      </div>
+
+      <div>
+        <div style="display:grid; gap:20px">
+          <div>
+            <div class="eyebrow" style="color:var(--brass)"><span style="background:var(--brass); width:18px; height:1px; display:inline-block"></span> Update once</div>
+            <h3 style="font-size:22px; margin:10px 0 6px">Push a new promo. Live at every location on the next call.</h3>
+            <p style="color:var(--ink-mute); font-size:14.5px">No site‑by‑site training. No manager retraining a transient team. You write it once; VenueVox delivers it 10,000 times.</p>
+          </div>
+          <div>
+            <div class="eyebrow" style="color:var(--brass)"><span style="background:var(--brass); width:18px; height:1px; display:inline-block"></span> Location‑aware</div>
+            <h3 style="font-size:22px; margin:10px 0 6px">Each venue keeps its own packages, hours, and lanes.</h3>
+            <p style="color:var(--ink-mute); font-size:14.5px">One brand. Local details handled. Riverside has 8 bays; Airport has 32 lanes. VenueVox knows.</p>
+          </div>
+          <div>
+            <div class="eyebrow" style="color:var(--brass)"><span style="background:var(--brass); width:18px; height:1px; display:inline-block"></span> Pay for consistency</div>
+            <h3 style="font-size:22px; margin:10px 0 6px">Stop paying for the variance between your best and worst site.</h3>
+            <p style="color:var(--ink-mute); font-size:14.5px">Your best party coordinator is the floor for every location — every shift, Tuesday and Saturday alike.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ========================= DASHBOARD PREVIEW ========================= -->
+<section class="section light" id="dashboard">
+  <div class="container">
+    <div class="section-head">
+      <div>
+        <span class="eyebrow">Revenue dashboard</span>
+        <h2 style="margin-top:14px">A control layer for the floor,<br/>not a call report.</h2>
+      </div>
+      <p>We surface revenue captured — deposits collected, upsells converted, promo delivery, pipeline value. Raw calls answered is a footnote, not the headline.</p>
+    </div>
+
+    <div class="dash">
+      <div class="dash-top">
+        <div class="window"><i></i><i></i><i></i></div>
+        <div class="tabs">
+          <a class="active">Revenue</a>
+          <a>Party pipeline</a>
+          <a>Promos</a>
+          <a>Inquiries</a>
+          <a>Locations</a>
+        </div>
+        <div style="font-family:var(--f-mono); font-size:11px; letter-spacing:.14em; color:rgba(42,51,64,.5); text-transform:uppercase">WK 16 · All locations</div>
+      </div>
+
+      <div class="dash-body">
+        <div class="dash-kpis">
+          <div class="kpi accent">
+            <div class="l">Revenue captured · wk</div>
+            <div class="v num">$38,420</div>
+            <div class="d">↑ 19% vs. prior week</div>
+          </div>
+          <div class="kpi">
+            <div class="l">Deposits collected</div>
+            <div class="v num">$12,600 <span class="u">· 84 parties</span></div>
+            <div class="d">↑ 22 vs. 62 parties</div>
+          </div>
+          <div class="kpi">
+            <div class="l">Promo delivery</div>
+            <div class="v num">94<span class="u">%</span></div>
+            <div class="d">target 90% · clear</div>
+          </div>
+          <div class="kpi">
+            <div class="l">Upsells converted</div>
+            <div class="v num">$1,845 <span class="u">· 41%</span></div>
+            <div class="d">+$420 vs. last week</div>
+          </div>
+        </div>
+
+        <div class="dash-lower">
+          <div class="chart">
+            <div class="chart-head">
+              <h4>Revenue captured · Mon → Sun</h4>
+              <div class="legend">
+                <span><i style="background:var(--navy)"></i> Deposits</span>
+                <span><i style="background:var(--teal)"></i> Upsells</span>
+              </div>
+            </div>
+            <div class="chart-plot">
+              <div class="bar-col"><i class="b" style="height:18%"></i><i class="a" style="height:48%"></i></div>
+              <div class="bar-col"><i class="b" style="height:14%"></i><i class="a" style="height:38%"></i></div>
+              <div class="bar-col"><i class="b" style="height:22%"></i><i class="a" style="height:56%"></i></div>
+              <div class="bar-col"><i class="b" style="height:26%"></i><i class="a" style="height:64%"></i></div>
+              <div class="bar-col"><i class="b" style="height:34%"></i><i class="a" style="height:82%"></i></div>
+              <div class="bar-col"><i class="b" style="height:42%"></i><i class="a" style="height:94%"></i></div>
+              <div class="bar-col"><i class="b" style="height:30%"></i><i class="a" style="height:72%"></i></div>
+            </div>
+            <div class="chart-x"><span>Mon</span><span>Tue</span><span>Wed</span><span>Thu</span><span>Fri</span><span>Sat</span><span>Sun</span></div>
+          </div>
+
+          <div class="activity">
+            <h4>Live activity</h4>
+            <div class="act-row"><span class="dot e"></span><div class="msg">Deposit collected — <b>Okonkwo</b> · $150 · Sat 5pm</div><div class="time">2m</div></div>
+            <div class="act-row"><span class="dot t"></span><div class="msg">Upsell converted — <b>+$45</b> VIP add‑on</div><div class="time">6m</div></div>
+            <div class="act-row"><span class="dot t"></span><div class="msg">Weekend promo announced to caller</div><div class="time">7m</div></div>
+            <div class="act-row"><span class="dot b"></span><div class="msg">Hold placed — Sarah, Sat 4pm, Lane 12</div><div class="time">14m</div></div>
+            <div class="act-row"><span class="dot c"></span><div class="msg">Auto‑follow‑up fired — Rivera, deposit pending</div><div class="time">22m</div></div>
+            <div class="act-row"><span class="dot e"></span><div class="msg">Party confirmed — <b>Delgado</b> · 24 guests</div><div class="time">31m</div></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ========================= FINAL CTA ========================= -->
+<section class="final-cta" id="pricing">
+  <div class="container" style="position:relative">
+    <span class="eyebrow">Every call sells.</span>
+    <h2>Less than a part‑time hire.<br/>More consistent than your best employee.</h2>
+    <p>$399 / location / month. No per‑call fees. Integrates with Semnox, Intercard, Embed, and PCS. Live in 10 days.</p>
+    <div class="cta-row">
+      <button class="btn btn-primary">Book a demo <span class="arrow">→</span></button>
+      <button class="btn btn-ghost">
+        <svg width="14" height="14" viewBox="0 0 14 14" fill="currentColor"><path d="M3 2 L11 7 L3 12 Z"/></svg>
+        Hear VenueVox sell
+      </button>
+    </div>
+    <div style="margin-top:36px; display:flex; gap:36px; justify-content:center; flex-wrap:wrap; color:var(--ink-dim); font-family:var(--f-mono); font-size:11px; letter-spacing:.14em; text-transform:uppercase">
+      <span>· 10‑day deployment</span>
+      <span>· Month‑to‑month</span>
+      <span>· 94% promo delivery SLA</span>
+      <span>· POS integrations included</span>
+    </div>
+  </div>
+</section>
+
+<!-- ========================= FOOTER ========================= -->
+<footer>
+  <div class="container">
+    <div class="foot-top">
+      <div>
+        <a class="brand" href="#" style="color:var(--ink)">
+          <span class="mark">
+            <svg width="26" height="26" viewBox="0 0 26 26" fill="none">
+              <path d="M3 4 L10 20 L13 13 L16 20 L23 4" stroke="currentColor" stroke-width="2.2" stroke-linecap="square" stroke-linejoin="miter"/>
+            </svg>
+          </span>
+          VenueVox
+        </a>
+        <p style="max-width:320px; margin-top:14px; font-size:13px; line-height:1.55">The front‑end revenue layer for bowling centers, barcades, axe throwing, and FECs.</p>
+      </div>
+      <div>
+        <h5>Product</h5>
+        <ul>
+          <li><a>Party pipeline</a></li>
+          <li><a>Promo engine</a></li>
+          <li><a>Inquiry automation</a></li>
+          <li><a>Multi‑location</a></li>
+          <li><a>Integrations</a></li>
+        </ul>
+      </div>
+      <div>
+        <h5>Built for</h5>
+        <ul>
+          <li><a>Bowling centers</a></li>
+          <li><a>Barcades</a></li>
+          <li><a>Axe throwing</a></li>
+          <li><a>FECs &amp; hybrids</a></li>
+          <li><a>Social gaming</a></li>
+        </ul>
+      </div>
+      <div>
+        <h5>Company</h5>
+        <ul>
+          <li><a>Pricing</a></li>
+          <li><a>Demo line</a></li>
+          <li><a>Case studies</a></li>
+          <li><a>Careers</a></li>
+          <li><a>Contact</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="foot-bottom">
+      <span>© 2026 VenueVox · Every call sells.</span>
+      <span>Privacy · Terms · Security</span>
+    </div>
+  </div>
+</footer>
+
+<!-- ========================= TWEAKS PANEL ========================= -->
+<div class="tweaks" id="tweaks">
+  <h5>
+    Tweaks
+    <button onclick="hideTweaks()" title="Close">×</button>
+  </h5>
+
+  <div class="group">
+    <label>Theme</label>
+    <div class="opts" data-key="theme">
+      <button data-v="night" class="on">Midnight</button>
+      <button data-v="day">Daylight</button>
+    </div>
+  </div>
+
+  <div class="group">
+    <label>Accent</label>
+    <div class="swatch" data-key="accent">
+      <button data-v="teal" class="on" style="background:#19B3A6" title="Signal Teal"></button>
+      <button data-v="brass" style="background:#C79A4B" title="Venue Brass"></button>
+      <button data-v="emerald" style="background:#10B981" title="Emerald"></button>
+    </div>
+  </div>
+
+  <div class="group">
+    <label>Hero headline</label>
+    <div class="opts" data-key="headline" style="flex-direction:column">
+      <button data-v="a" class="on">Your phone gets answered. But is it selling?</button>
+      <button data-v="b">1 in 5 callers hear the promo. Fix that.</button>
+      <button data-v="c">Every call sells.</button>
+    </div>
+  </div>
+
+  <div class="group">
+    <label>Hero visual</label>
+    <div class="opts" data-key="hero">
+      <button data-v="console" class="on">Live console</button>
+      <button data-v="minimal">Minimal</button>
+    </div>
+  </div>
+</div>
+
+<script>
+// ===== Demo wave rendering (static bars) =====
+(function(){
+  const w = document.getElementById('wave');
+  if(!w) return;
+  const N = 72;
+  const heights = [];
+  for(let i=0;i<N;i++){
+    const x = i/N;
+    const h = 6 + Math.round(Math.abs(Math.sin(x*9)) * 16 + Math.abs(Math.cos(x*3))*4);
+    heights.push(h);
+  }
+  w.innerHTML = heights.map((h,i)=>{
+    const played = i/N < 0.34;
+    return `<span style="height:${h}px; background:${played ? '#0F1B2D' : 'rgba(15,27,45,.25)'}"></span>`;
+  }).join('');
+})();
+
+// ===== Play button simulation =====
+(function(){
+  const btn = document.getElementById('playBtn');
+  const time = document.getElementById('timeLabel');
+  if(!btn) return;
+  let playing = false, t = 42, iv;
+  btn.addEventListener('click', ()=>{
+    playing = !playing;
+    btn.innerHTML = playing
+      ? '<svg width="18" height="18" viewBox="0 0 14 14" fill="currentColor"><rect x="3" y="2" width="3" height="10"/><rect x="8" y="2" width="3" height="10"/></svg>'
+      : '<svg width="18" height="18" viewBox="0 0 14 14" fill="currentColor"><path d="M3 2 L11 7 L3 12 Z"/></svg>';
+    if(playing){
+      iv = setInterval(()=>{
+        t++;
+        if(t>=138){t=42; playing=false; clearInterval(iv); btn.click();}
+        const m = String(Math.floor(t/60)).padStart(2,'0');
+        const s = String(t%60).padStart(2,'0');
+        time.textContent = `${m}:${s}`;
+      }, 1000);
+    } else {
+      clearInterval(iv);
+    }
+  });
+})();
+
+// ===== Tweaks =====
+const TWEAK_DEFAULTS = /*EDITMODE-BEGIN*/{
+  "theme": "night",
+  "accent": "teal",
+  "headline": "a",
+  "hero": "console"
+}/*EDITMODE-END*/;
+
+let state = Object.assign({}, TWEAK_DEFAULTS);
+
+function applyTweaks(){
+  // theme
+  document.body.classList.toggle('theme-day', state.theme === 'day');
+  // accent
+  document.body.classList.remove('accent-brass','accent-emerald');
+  if(state.accent === 'brass') document.body.classList.add('accent-brass');
+  if(state.accent === 'emerald') document.body.classList.add('accent-emerald');
+  // headline
+  const h1 = document.querySelector('.hero h1');
+  if(h1){
+    if(state.headline === 'a') h1.innerHTML = 'Your phone gets answered.<br/><em>But is it selling?</em>';
+    if(state.headline === 'b') h1.innerHTML = '1 in 5 callers hear the promo.<br/><em>Fix that.</em>';
+    if(state.headline === 'c') h1.innerHTML = '<em>Every call sells.</em>';
+  }
+  // hero visual
+  const chip = document.querySelector('.float-chip');
+  const transcript = document.querySelector('.hero .transcript');
+  if(chip && transcript){
+    if(state.hero === 'minimal'){
+      chip.style.display = 'none';
+      transcript.style.display = 'none';
+    } else {
+      chip.style.display = '';
+      transcript.style.display = '';
+    }
+  }
+  // refresh button highlights
+  document.querySelectorAll('.tweaks [data-key]').forEach(g=>{
+    const k = g.dataset.key;
+    g.querySelectorAll('button').forEach(b=> b.classList.toggle('on', b.dataset.v === state[k]));
+  });
+}
+
+document.querySelectorAll('.tweaks [data-key]').forEach(g=>{
+  const k = g.dataset.key;
+  g.querySelectorAll('button').forEach(b=>{
+    b.addEventListener('click', ()=>{
+      state[k] = b.dataset.v;
+      applyTweaks();
+      try{
+        window.parent.postMessage({type:'__edit_mode_set_keys', edits:{[k]: state[k]}}, '*');
+      }catch(e){}
+    });
+  });
+});
+
+function showTweaks(){ document.getElementById('tweaks').classList.add('on'); }
+function hideTweaks(){ document.getElementById('tweaks').classList.remove('on'); }
+
+window.addEventListener('message', (e)=>{
+  const d = e.data || {};
+  if(d.type === '__activate_edit_mode') showTweaks();
+  if(d.type === '__deactivate_edit_mode') hideTweaks();
+});
+try{
+  window.parent.postMessage({type:'__edit_mode_available'}, '*');
+}catch(e){}
+
+applyTweaks();
+</script>
+
+</body>
+</html>
