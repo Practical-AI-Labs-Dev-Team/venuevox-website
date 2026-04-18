@@ -1,0 +1,575 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>VenueVox — Every call sells.</title>
+  <meta name="description" content="VenueVox is the front-end revenue layer for bowling centers, barcades, axe throwing venues, and FECs. Every call gets the promo. Every party lead moves to deposit. Every question answered at zero labor cost." />
+
+  <!-- Open Graph -->
+  <meta property="og:title" content="VenueVox — Every call sells." />
+  <meta property="og:description" content="The front-end revenue layer for entertainment venues. Promos announced, parties booked to deposit, inquiries handled — every call, every location." />
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://venuevox.us" />
+  <meta property="og:site_name" content="VenueVox" />
+
+  <!-- Canonical -->
+  <link rel="canonical" href="https://venuevox.us" />
+
+  <!-- Favicon -->
+  <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter+Tight:wght@400;500;600;700;800&family=Inter:wght@400;500;600;700&family=IBM+Plex+Sans:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet" />
+
+  <!-- Stylesheet -->
+  <link rel="stylesheet" href="/styles.css" />
+
+  <!-- Cal.com Embed -->
+  <script type="text/javascript">
+    (function (C, A, L) { let p = function (a, ar) { a.q.push(ar); }; let d = C.document; C.Cal = C.Cal || function () { let cal = C.Cal; let ar = arguments; if (!cal.loaded) { cal.ns = {}; cal.q = cal.q || []; d.head.appendChild(d.createElement("script")).src = A; cal.loaded = true; } if (ar[0] === L) { const api = function () { p(api, arguments); }; const namespace = ar[1]; api.q = api.q || []; if(typeof namespace === "string"){cal.ns[namespace] = cal.ns[namespace] || api;p(cal.ns[namespace], ar);p(cal, ["initNamespace", namespace]);} else p(cal, ar); return;} p(cal, ar); }; })(window, "https://app.cal.com/embed/embed.js", "init");
+    Cal("init", "venuevox", {origin:"https://app.cal.com"});
+    Cal.ns.venuevox("ui", {"cssVarsPerTheme":{"light":{"cal-brand":"#C79A4B"}},"hideEventTypeDetails":false,"layout":"month_view"});
+  </script>
+</head>
+<body>
+
+<!-- ========================= NAV ========================= -->
+<nav class="nav" id="nav">
+  <div class="container nav-inner">
+    <a class="brand" href="#" aria-label="VenueVox home">
+      <span class="mark">
+        <svg width="26" height="26" viewBox="0 0 26 26" fill="none">
+          <path d="M3 4 L10 20 L13 13 L16 20 L23 4" stroke="currentColor" stroke-width="2.2" stroke-linecap="square" stroke-linejoin="miter"/>
+        </svg>
+      </span>
+      VenueVox
+    </a>
+
+    <ul class="nav-links">
+      <li><a href="#pillars">How it works</a></li>
+      <li><a href="#demo">Demo</a></li>
+    </ul>
+
+    <div class="nav-cta">
+      <button class="icon-btn" id="themeToggle" aria-label="Toggle theme" title="Toggle light / dark mode">
+        <svg class="icon-moon" width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M13 10.5A6 6 0 0 1 5.5 3c0-.4 0-.8.1-1.2A6 6 0 1 0 14.2 10.4c-.4.1-.8.1-1.2.1z" fill="currentColor"/></svg>
+        <svg class="icon-sun" width="16" height="16" viewBox="0 0 16 16" fill="none" style="display:none"><circle cx="8" cy="8" r="3" fill="currentColor"/><g stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><path d="M8 1v2M8 13v2M1 8h2M13 8h2M3 3l1.4 1.4M11.6 11.6L13 13M3 13l1.4-1.4M11.6 4.4L13 3"/></g></svg>
+      </button>
+      <button
+        class="btn btn-primary btn-sm"
+        data-cal-link="aqsaf/venuevox"
+        data-cal-namespace="venuevox"
+        data-cal-config='{"layout":"month_view","useSlotsViewOnSmallScreen":"true"}'
+        id="navBookDemo"
+      >Book a demo <span class="arrow">→</span></button>
+    </div>
+  </div>
+</nav>
+
+<!-- ========================= HERO ========================= -->
+<section class="hero" id="hero">
+  <div class="container hero-grid">
+    <div>
+      <span class="eyebrow">Front-end revenue layer · Eatertainment</span>
+      <h1>Your phone gets answered.<br/><em>But is it selling?</em></h1>
+      <p class="sub">
+        VenueVox answers calls, announces promos, and manages party bookings to deposit —
+        with the consistency of your best employee, at a fraction of the cost.
+        No training. No turnover. No skipped upsells.
+      </p>
+      <div class="cta-row">
+        <button
+          class="btn btn-primary"
+          data-cal-link="aqsaf/venuevox"
+          data-cal-namespace="venuevox"
+          data-cal-config='{"layout":"month_view","useSlotsViewOnSmallScreen":"true"}'
+          id="heroBookDemo"
+        >Book a demo <span class="arrow">→</span></button>
+        <a class="btn btn-ghost" href="#demo">
+          <svg width="14" height="14" viewBox="0 0 14 14" fill="currentColor"><path d="M3 2 L11 7 L3 12 Z"/></svg>
+          Hear VenueVox sell a promo
+        </a>
+      </div>
+      <div class="meta">
+        <div><strong class="num">94%</strong>promo delivery target</div>
+        <div><strong class="num">48 hrs</strong>designed inquiry → deposit</div>
+        <div><strong class="num">&lt; 1 FTE</strong>designed to replace part‑time phone labor</div>
+      </div>
+    </div>
+
+    <!-- Hero visual: Minimal stack -->
+    <div style="position:relative">
+      <div class="console minimal-hero">
+        <div class="console-head">
+          <div class="title"><span class="pulse"></span> Active · Saturday evening</div>
+          <div class="mono" style="font-size:11px; color:var(--ink-dim); letter-spacing:.12em">VENUEVOX</div>
+        </div>
+
+        <div class="minimal-stack">
+          <div class="m-row">
+            <div class="m-icon teal">→</div>
+            <div>
+              <div class="m-k">Incoming call</div>
+              <div class="m-v">Party inquiry · 12–15 guests, Saturday</div>
+            </div>
+          </div>
+          <div class="m-row">
+            <div class="m-icon teal">●</div>
+            <div>
+              <div class="m-k">Promo announced</div>
+              <div class="m-v">Game card bonus · load $100, +$20</div>
+            </div>
+          </div>
+          <div class="m-row">
+            <div class="m-icon brass">▫</div>
+            <div>
+              <div class="m-k">Hold placed · 24h</div>
+              <div class="m-v">Package presented · upsell attempted</div>
+            </div>
+          </div>
+          <div class="m-row done">
+            <div class="m-icon emerald">✓</div>
+            <div>
+              <div class="m-k">Deposit link sent</div>
+              <div class="m-v">Auto-follow-up armed · 2h</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="float-chip">
+        <div class="t">+ Deposit collected</div>
+        <div class="m">Party confirmed — Delgado party, 15 guests</div>
+        <div class="s">Sat 4:00pm · Lane 12 · $150 deposit · +$45 upsell</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ========================= BUILT-FOR LINE ========================= -->
+<section class="built-for">
+  <div class="container">
+    <p>Built for bowling centers, barcades, axe throwing venues, and multi-concept FECs.</p>
+  </div>
+</section>
+
+<!-- ========================= PROBLEM REFRAME ========================= -->
+<section class="section light" id="problem">
+  <div class="container">
+    <div class="section-head fade-in">
+      <div>
+        <span class="eyebrow">The real leak</span>
+        <h2 style="margin-top:14px">It's not missed calls.<br/>It's answered calls that didn't sell.</h2>
+      </div>
+      <p>Your multi‑unit already pays someone to pick up. The variance isn't demand — it's execution. Most front desks mention this weekend's promo to <b>1 in 5 callers</b>. Your best does it <b>every time</b>.</p>
+    </div>
+
+    <div class="compare fade-in">
+      <div class="compare-col bad">
+        <h3>Part‑time front desk</h3>
+        <div class="big">Call <em>answered</em>. Revenue <em>left on the floor.</em></div>
+        <p>Phone gets picked up. Question gets answered. Promo doesn't. Lead sits on a sticky note. Deposit never lands. Next week a new hire starts from zero.</p>
+        <ul>
+          <li>Mentions weekend promo ~20% of calls</li>
+          <li>Party leads live in a notebook, not a pipeline</li>
+          <li>Upsells drop the moment training ends</li>
+          <li>Inconsistent across shifts, worse across locations</li>
+        </ul>
+        <div class="row"><div class="k">Promo delivered</div><div class="v">≈ 1 in 5</div></div>
+        <div class="row"><div class="k">Party lead follow-up</div><div class="v">Ad hoc</div></div>
+        <div class="row"><div class="k">Consistency</div><div class="v">Shift-dependent</div></div>
+      </div>
+
+      <div class="compare-divider">vs.</div>
+
+      <div class="compare-col good">
+        <h3>VenueVox</h3>
+        <div class="big">Call <em>answered.</em> Revenue <em>captured.</em></div>
+        <p>Every caller hears the current promo. Every party inquiry enters a pipeline. Deposit links go out. Follow‑ups fire automatically. The solved state — every shift, every location, every time.</p>
+        <ul>
+          <li>Announces the active promo on every call</li>
+          <li>Party pipeline: inquiry → hold → deposit → confirmed</li>
+          <li>Upsell attempted on every qualifying package</li>
+          <li>One script, every location — Tuesday and Saturday</li>
+        </ul>
+        <div class="row"><div class="k">Promo delivered</div><div class="v">Every qualifying call</div></div>
+        <div class="row"><div class="k">Party lead follow-up</div><div class="v">Automated</div></div>
+        <div class="row"><div class="k">Consistency</div><div class="v">Every shift</div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ========================= THREE PILLARS ========================= -->
+<section class="section" id="pillars">
+  <div class="container">
+    <div class="section-head fade-in">
+      <div>
+        <span class="eyebrow">Three things we do, always</span>
+        <h2 style="margin-top:14px">The consistency of your best employee.<br/>Every call, every location.</h2>
+      </div>
+      <p>VenueVox isn't a voice bot — it's a front‑end revenue layer. It announces the promo, closes the party, and handles the rest so your floor stays on the floor.</p>
+    </div>
+
+    <div class="pillars">
+      <!-- Pillar 1 -->
+      <div class="pillar fade-in">
+        <div class="idx">01 · PROMO CONSISTENCY</div>
+        <h3>Every caller hears the promo.</h3>
+        <p>Your weekend special lives on the sign. It should live on every call, too. VenueVox announces the active promo on every qualifying call — no training, no reminders, no "I forgot."</p>
+        <div class="viz">
+          <div class="meter">
+            <div class="label">VenueVox · this week</div>
+            <div class="v num" style="color:var(--teal)">94%</div>
+            <div class="bar"><i style="width:94%"></i></div>
+          </div>
+          <div class="meter">
+            <div class="label">Part‑time staff · same venue</div>
+            <div class="v num" style="color:var(--coral)">22%</div>
+            <div class="bar bad"><i style="width:22%"></i></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Pillar 2 -->
+      <div class="pillar fade-in">
+        <div class="idx">02 · PARTY PIPELINE</div>
+        <h3>Party bookings closed to deposit.</h3>
+        <p>Birthdays are the highest‑margin line. Each booking is 4–5 calls. VenueVox runs the whole play: capture the inquiry, present the package, hold the date, send the link, follow up if payment stalls.</p>
+        <div class="viz">
+          <div class="pipe-mini">
+            <div class="node on">Inquiry</div>
+            <div class="node on">Hold</div>
+            <div class="node on">Sent</div>
+            <div class="node">Paid</div>
+            <div class="node">Confirm</div>
+          </div>
+          <div class="meter" style="margin-top:12px">
+            <div class="label">Inquiry → deposit · 48 hrs</div>
+            <div class="v num" style="color:var(--emerald)">71%</div>
+            <div class="bar"><i style="width:71%; background:var(--emerald)"></i></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Pillar 3 -->
+      <div class="pillar fade-in">
+        <div class="idx">03 · GENERAL INQUIRIES</div>
+        <h3>General inquiries at zero labor cost.</h3>
+        <p>"When do you close?" "Are you open Sunday?" "How much is bowling?" Dozens per day, zero revenue, $17/hr to answer. VenueVox handles every one — accurately, instantly, without pulling a single person off the floor.</p>
+        <div class="viz">
+          <div class="inq-list">
+            <div class="row"><div class="q">"Are you open Easter Sunday?"</div><div class="a">— 0s · resolved</div></div>
+            <div class="row"><div class="q">"Cost per lane on Fridays?"</div><div class="a">— 0s · resolved</div></div>
+            <div class="row"><div class="q">"Do you take walk‑ins after 9?"</div><div class="a">— 0s · resolved</div></div>
+            <div class="row"><div class="q">"Is the kitchen open till close?"</div><div class="a">— 0s · resolved</div></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ========================= WORKFLOW / PIPELINE ========================= -->
+<section class="section" id="workflow" style="padding-top:0">
+  <div class="container">
+    <div class="section-head fade-in">
+      <div>
+        <span class="eyebrow">Party workflow</span>
+        <h2 style="margin-top:14px">A pipeline, not a sticky note.</h2>
+      </div>
+      <p>Every party lead enters a structured pipeline. Every stage has a next action. Every card shows who, when, and how much — at a glance from the floor.</p>
+    </div>
+
+    <div class="pipeline-shell fade-in">
+      <div class="process">
+        <div class="p-step">
+          <div class="p-num">01</div>
+          <div class="p-name">Inquiry</div>
+          <div class="p-desc">Caller asks about a party. VenueVox captures date, guest count, and package interest.</div>
+        </div>
+        <div class="p-arrow">→</div>
+        <div class="p-step">
+          <div class="p-num">02</div>
+          <div class="p-name">Hold</div>
+          <div class="p-desc">Date placed on a 24‑hour hold. Staff can review or override from the dashboard.</div>
+        </div>
+        <div class="p-arrow">→</div>
+        <div class="p-step">
+          <div class="p-num">03</div>
+          <div class="p-name">Deposit sent</div>
+          <div class="p-desc">Secure deposit link texted to caller. Timer starts. Auto follow-up armed.</div>
+        </div>
+        <div class="p-arrow">→</div>
+        <div class="p-step">
+          <div class="p-num">04</div>
+          <div class="p-name">Paid</div>
+          <div class="p-desc">Payment confirmed. Party moves from tentative to committed revenue.</div>
+        </div>
+        <div class="p-arrow">→</div>
+        <div class="p-step">
+          <div class="p-num">05</div>
+          <div class="p-name">Confirmed</div>
+          <div class="p-desc">Synced to party reservation system. GM sees it on the floor plan.</div>
+        </div>
+      </div>
+      <p class="process-note">Every stage has a next action. Every lead has a timer. Nothing lives on a sticky note.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ========================= DEMO / PROOF ========================= -->
+<section class="section light" id="demo">
+  <div class="container">
+    <div class="section-head fade-in">
+      <div>
+        <span class="eyebrow">Hear it sell</span>
+        <h2 style="margin-top:14px">Call the demo line.<br/>Hear VenueVox close a party.</h2>
+      </div>
+      <p>This is a prototype line modeled on a real bowling-and-arcade venue using public information. Hear how VenueVox handles a party inquiry, announces a promo, and moves the caller toward a deposit.</p>
+    </div>
+
+    <div class="demo-grid fade-in">
+      <!-- Player -->
+      <div class="player">
+        <div class="meta-row">
+          <span>Prototype demo · Party inquiry</span>
+          <span class="num">00:42 / 02:18</span>
+        </div>
+        <h3>"I'm planning my daughter's 10th birthday — do you have space Saturday?"</h3>
+
+        <div class="controls">
+          <button class="play-btn" id="playBtn" aria-label="Play demo">
+            <svg width="18" height="18" viewBox="0 0 14 14" fill="currentColor"><path d="M3 2 L11 7 L3 12 Z"/></svg>
+          </button>
+          <div class="wave-static" id="wave"></div>
+          <div class="time num" id="timeLabel">00:42</div>
+        </div>
+
+        <div style="display:flex; gap:8px; flex-wrap:wrap">
+          <span class="tag" style="background:rgba(15,27,45,.08); color:var(--graphite)">Promo announced</span>
+          <span class="tag" style="background:rgba(25,179,166,.12); color:var(--teal)">Package presented</span>
+          <span class="tag" style="background:rgba(199,154,75,.14); color:var(--brass)">Hold placed</span>
+          <span class="tag" style="background:rgba(16,185,129,.12); color:var(--emerald)">Deposit link sent</span>
+        </div>
+
+        <div style="display:flex; gap:12px; margin-top:4px">
+          <a class="btn btn-dark" href="tel:+19292362392" id="callDemoBtn">Call demo: (929) 236‑2392</a>
+        </div>
+      </div>
+
+      <!-- Transcript -->
+      <div class="demo-transcript">
+        <h4>Transcript · T+00:18 to 00:42</h4>
+        <div class="t-row"><div class="who vv">VenueVox</div><div class="msg">Thanks for calling. Planning a party? Quick note — parties booked before Wednesday get our <b>game card bonus: load $100, we add $20.</b></div></div>
+        <div class="t-row"><div class="who">Guest</div><div class="msg">Oh nice. Yeah, I need Saturday afternoon. Ten kids, maybe twelve.</div></div>
+        <div class="t-row"><div class="who vv">VenueVox</div><div class="msg">Our <b>Ultimate package</b> covers 12 — two hours of bowling, pizza, soft drinks, game cards loaded. $299 flat, plus the promo bonus. I can hold Saturday at 4pm on Lane 12 for 24 hours while you check with family.</div></div>
+        <div class="t-row"><div class="who">Guest</div><div class="msg">Great, hold it. Can you send the deposit info?</div></div>
+        <div class="t-row"><div class="who vv">VenueVox</div><div class="msg">Sending the secure $150 deposit link to this number now. Auto‑follow‑up in 2 hours if it's not paid. Anything else — allergies, cake drop‑off?</div></div>
+      </div>
+    </div>
+
+    <div class="proof-row fade-in" style="border-color:rgba(15,27,45,.1); background:#fff; color:var(--navy)">
+      <div class="proof-item" style="border-color:rgba(15,27,45,.1)">
+        <div class="v num" style="color:var(--navy)">Human-sounding</div>
+        <div class="l" style="color:rgba(42,51,64,.6)">Trained on entertainment-venue calls, not generic scripts</div>
+      </div>
+      <div class="proof-item" style="border-color:rgba(15,27,45,.1)">
+        <div class="v num" style="color:var(--navy)">Handoff-ready</div>
+        <div class="l" style="color:rgba(42,51,64,.6)">Escalates to your GM when a human is actually needed</div>
+      </div>
+      <div class="proof-item">
+        <div class="v num" style="color:var(--navy)">Listen anytime</div>
+        <div class="l" style="color:rgba(42,51,64,.6)">Every call is recorded, transcribed, and auditable</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ========================= MULTI-LOCATION ========================= -->
+<section class="section" id="multi">
+  <div class="container">
+    <div class="section-head fade-in">
+      <div>
+        <span class="eyebrow">Multi‑location consistency</span>
+        <h2 style="margin-top:14px">One script. Every location.<br/>Tuesday and Saturday.</h2>
+      </div>
+      <p>Location A closes 70 parties a weekend. Location C closes 35 with the same foot traffic. The variance isn't demand — it's execution. VenueVox flattens it. Update the promo once — every site announces it by the next call.</p>
+    </div>
+
+    <div class="multi-simple">
+      <div class="ms-item fade-in">
+        <div class="eyebrow" style="color:var(--brass)"><span style="background:var(--brass); width:18px; height:1px; display:inline-block"></span> Update once</div>
+        <h3 style="font-size:22px; margin:10px 0 6px">Push a new promo. Live at every location on the next call.</h3>
+        <p>No site-by-site training. No manager retraining a transient team. You write it once; VenueVox delivers it every time.</p>
+      </div>
+      <div class="ms-item fade-in">
+        <div class="eyebrow" style="color:var(--brass)"><span style="background:var(--brass); width:18px; height:1px; display:inline-block"></span> Location-aware</div>
+        <h3 style="font-size:22px; margin:10px 0 6px">Each venue keeps its own packages, hours, and lanes.</h3>
+        <p>One brand. Local details handled. The barcade keeps its bay count; the bowling center keeps its lane count. VenueVox knows.</p>
+      </div>
+      <div class="ms-item fade-in">
+        <div class="eyebrow" style="color:var(--brass)"><span style="background:var(--brass); width:18px; height:1px; display:inline-block"></span> Pay for consistency</div>
+        <h3 style="font-size:22px; margin:10px 0 6px">Stop paying for the variance between your best and worst site.</h3>
+        <p>Your best party coordinator becomes the front end for every location — every shift, Tuesday and Saturday alike.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ========================= DASHBOARD PREVIEW ========================= -->
+<section class="section light" id="dashboard">
+  <div class="container">
+    <div class="section-head fade-in">
+      <div>
+        <span class="eyebrow">Revenue dashboard</span>
+        <h2 style="margin-top:14px">A control layer for the floor,<br/>not a call report.</h2>
+      </div>
+      <p>We surface revenue captured — deposits collected, upsells converted, promo delivery, pipeline value. Raw calls answered is a footnote, not the headline.</p>
+    </div>
+
+    <div class="dash fade-in">
+      <div class="dash-top">
+        <div class="window"><i></i><i></i><i></i></div>
+        <div class="tabs">
+          <a class="active">Revenue</a>
+          <a>Party pipeline</a>
+          <a>Promos</a>
+          <a>Inquiries</a>
+          <a>Locations</a>
+        </div>
+        <div style="font-family:var(--f-mono); font-size:11px; letter-spacing:.14em; color:rgba(42,51,64,.5); text-transform:uppercase">WK 16 · All locations</div>
+      </div>
+
+      <div class="dash-body">
+        <div class="dash-kpis">
+          <div class="kpi accent">
+            <div class="l">Revenue captured · wk</div>
+            <div class="v num">$38,420</div>
+            <div class="d">↑ 19% vs. prior week</div>
+          </div>
+          <div class="kpi">
+            <div class="l">Deposits collected</div>
+            <div class="v num">$12,600 <span class="u">· 84 parties</span></div>
+            <div class="d">↑ 22 vs. 62 parties</div>
+          </div>
+          <div class="kpi">
+            <div class="l">Promo delivery</div>
+            <div class="v num">94<span class="u">%</span></div>
+            <div class="d">target 90% · clear</div>
+          </div>
+          <div class="kpi">
+            <div class="l">Upsells converted</div>
+            <div class="v num">$1,845 <span class="u">· 41%</span></div>
+            <div class="d">+$420 vs. last week</div>
+          </div>
+        </div>
+
+        <div class="dash-lower">
+          <div class="chart">
+            <div class="chart-head">
+              <h4>Revenue captured · Mon → Sun</h4>
+              <div class="legend">
+                <span><i style="background:var(--navy)"></i> Deposits</span>
+                <span><i style="background:var(--teal)"></i> Upsells</span>
+              </div>
+            </div>
+            <div class="chart-plot">
+              <div class="bar-col"><i class="b" style="height:18%"></i><i class="a" style="height:48%"></i></div>
+              <div class="bar-col"><i class="b" style="height:14%"></i><i class="a" style="height:38%"></i></div>
+              <div class="bar-col"><i class="b" style="height:22%"></i><i class="a" style="height:56%"></i></div>
+              <div class="bar-col"><i class="b" style="height:26%"></i><i class="a" style="height:64%"></i></div>
+              <div class="bar-col"><i class="b" style="height:34%"></i><i class="a" style="height:82%"></i></div>
+              <div class="bar-col"><i class="b" style="height:42%"></i><i class="a" style="height:94%"></i></div>
+              <div class="bar-col"><i class="b" style="height:30%"></i><i class="a" style="height:72%"></i></div>
+            </div>
+            <div class="chart-x"><span>Mon</span><span>Tue</span><span>Wed</span><span>Thu</span><span>Fri</span><span>Sat</span><span>Sun</span></div>
+          </div>
+
+          <div class="activity">
+            <h4>Live activity</h4>
+            <div class="act-row"><span class="dot e"></span><div class="msg">Deposit collected — <b>Okonkwo</b> · $150 · Sat 5pm</div><div class="time">2m</div></div>
+            <div class="act-row"><span class="dot t"></span><div class="msg">Upsell converted — <b>+$45</b> VIP add‑on</div><div class="time">6m</div></div>
+            <div class="act-row"><span class="dot t"></span><div class="msg">Weekend promo announced to caller</div><div class="time">7m</div></div>
+            <div class="act-row"><span class="dot b"></span><div class="msg">Hold placed — Mendez, Sat 4pm, Lane 12</div><div class="time">14m</div></div>
+            <div class="act-row"><span class="dot c"></span><div class="msg">Auto‑follow‑up fired — Rivera, deposit pending</div><div class="time">22m</div></div>
+            <div class="act-row"><span class="dot e"></span><div class="msg">Party confirmed — <b>Delgado</b> · 24 guests</div><div class="time">31m</div></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ========================= FINAL CTA ========================= -->
+<section class="final-cta" id="pricing">
+  <div class="container" style="position:relative">
+    <span class="eyebrow">Every call sells.</span>
+    <h2>Less than a part‑time hire.<br/>More consistent than your best employee.</h2>
+    <p>$399 / location / month. No per-call fees. Designed for integration with entertainment POS systems.</p>
+    <div class="cta-row">
+      <button
+        class="btn btn-primary"
+        data-cal-link="aqsaf/venuevox"
+        data-cal-namespace="venuevox"
+        data-cal-config='{"layout":"month_view","useSlotsViewOnSmallScreen":"true"}'
+        id="ctaBookDemo"
+      >Book a demo <span class="arrow">→</span></button>
+      <a class="btn btn-ghost" href="tel:+19292362392">
+        <svg width="14" height="14" viewBox="0 0 14 14" fill="currentColor"><path d="M3 2 L11 7 L3 12 Z"/></svg>
+        Hear VenueVox sell
+      </a>
+    </div>
+    <div style="margin-top:36px; display:flex; gap:36px; justify-content:center; flex-wrap:wrap; color:var(--ink-dim); font-family:var(--f-mono); font-size:11px; letter-spacing:.14em; text-transform:uppercase">
+      <span>· Month-to-month</span>
+      <span>· Designed for POS integration</span>
+      <span>· Every call sells</span>
+    </div>
+  </div>
+</section>
+
+<!-- ========================= FOOTER ========================= -->
+<footer>
+  <div class="container">
+    <div class="foot-top">
+      <div>
+        <a class="brand" href="#" style="color:var(--ink)">
+          <span class="mark">
+            <svg width="26" height="26" viewBox="0 0 26 26" fill="none">
+              <path d="M3 4 L10 20 L13 13 L16 20 L23 4" stroke="currentColor" stroke-width="2.2" stroke-linecap="square" stroke-linejoin="miter"/>
+            </svg>
+          </span>
+          VenueVox
+        </a>
+        <p style="max-width:380px; margin-top:14px; font-size:13px; line-height:1.55">The front-end revenue layer for bowling centers, barcades, axe throwing, and FECs.</p>
+        <p style="margin-top:10px; font-size:13px"><a href="mailto:hello@venuevox.us" style="color:var(--teal)">hello@venuevox.us</a></p>
+      </div>
+      <div>
+        <h5>Get in touch</h5>
+        <ul>
+          <li><a href="tel:+19292362392">Demo line · (929) 236-2392</a></li>
+          <li><a
+            href="#"
+            data-cal-link="aqsaf/venuevox"
+            data-cal-namespace="venuevox"
+            data-cal-config='{"layout":"month_view","useSlotsViewOnSmallScreen":"true"}'
+          >Book a demo</a></li>
+          <li><a href="mailto:hello@venuevox.us">Contact</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="foot-bottom">
+      <span>© 2026 VenueVox · Every call sells.</span>
+      <span>Privacy · Terms · Security</span>
+    </div>
+  </div>
+</footer>
+
+<!-- Script -->
+<script src="/script.js"></script>
+
+</body>
+</html>
