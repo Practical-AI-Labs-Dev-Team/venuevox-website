@@ -898,6 +898,9 @@ img { max-width: 100%; display: block; }
 }
 .tag.brass { background: rgba(199,154,75,.14); color: var(--brass); }
 
+/* The [hidden] attribute must override our explicit display rules below */
+[hidden] { display: none !important; }
+
 /* Demo CTA row + live-call panel */
 .demo-actions {
   display: flex;
