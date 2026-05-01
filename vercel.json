@@ -1,0 +1,4 @@
+{
+  "buildCommand": "if [ -n \"$VAPI_PUBLIC_KEY\" ]; then sed -i \"s|VAPI_PUBLIC_KEY_PLACEHOLDER|$VAPI_PUBLIC_KEY|g\" script.js && echo \"Vapi public key injected into script.js\"; else echo \"VAPI_PUBLIC_KEY not set for this environment — live demo will show 'not configured' fallback.\"; fi",
+  "outputDirectory": "."
+}
