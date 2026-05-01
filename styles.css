@@ -828,10 +828,7 @@ img { max-width: 100%; display: block; }
   transition: background .2s;
 }
 .play-btn:hover { background: var(--graphite); }
-.play-btn:disabled {
-  cursor: not-allowed;
-  opacity: .5;
-}
+.play-btn.has-audio-error { opacity: .72; }
 
 .wave-static {
   display: flex;

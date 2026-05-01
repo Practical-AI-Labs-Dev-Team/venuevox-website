@@ -116,6 +116,11 @@
       btn.setAttribute('aria-label', isPlaying ? 'Pause demo' : 'Play demo');
     }
 
+    function resetErrorState() {
+      btn.classList.remove('has-audio-error');
+      btn.setAttribute('aria-label', 'Play demo');
+    }
+
     audio.addEventListener('loadedmetadata', updateTime);
     audio.addEventListener('timeupdate', updateTime);
     audio.addEventListener('pause', () => setPlaying(false));
@@ -126,16 +131,22 @@
       updateTime();
     });
     audio.addEventListener('error', () => {
-      btn.disabled = true;
+      btn.classList.add('has-audio-error');
       btn.setAttribute('aria-label', 'Demo audio unavailable');
       setPlaying(false);
     });
 
     btn.addEventListener('click', async () => {
+      resetErrorState();
       if (audio.paused) {
         try {
+          if (audio.networkState === HTMLMediaElement.NETWORK_NO_SOURCE) {
+            audio.load();
+          }
           await audio.play();
         } catch (err) {
+          btn.classList.add('has-audio-error');
+          btn.setAttribute('aria-label', 'Demo audio unavailable');
           setPlaying(false);
         }
       } else {
