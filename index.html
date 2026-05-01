@@ -337,16 +337,17 @@
       <div class="player">
         <div class="meta-row">
           <span>Prototype demo · Party inquiry</span>
-          <span class="num">00:42 / 02:18</span>
+          <span class="num" id="durationLabel">00:00 / 01:09</span>
         </div>
         <h3>"I'm planning my daughter's 10th birthday — do you have space Saturday?"</h3>
 
         <div class="controls">
+          <audio id="demoAudio" preload="metadata" src="audio/venuevox-demo.m4a"></audio>
           <button class="play-btn" id="playBtn" aria-label="Play demo">
             <svg width="18" height="18" viewBox="0 0 14 14" fill="currentColor"><path d="M3 2 L11 7 L3 12 Z"/></svg>
           </button>
           <div class="wave-static" id="wave"></div>
-          <div class="time num" id="timeLabel">00:42</div>
+          <div class="time num" id="timeLabel">00:00</div>
         </div>
 
         <div style="display:flex; gap:8px; flex-wrap:wrap">
