@@ -337,16 +337,17 @@
       <div class="player">
         <div class="meta-row">
           <span>Prototype demo · Party inquiry</span>
-          <span class="num">00:42 / 02:18</span>
+          <span class="num" id="durationLabel">00:00 / 01:09</span>
         </div>
         <h3>"I'm planning my daughter's 10th birthday — do you have space Saturday?"</h3>
 
         <div class="controls">
+          <audio id="demoAudio" preload="none" src="audio/venuevox-demo.mp3"></audio>
           <button class="play-btn" id="playBtn" aria-label="Play demo">
             <svg width="18" height="18" viewBox="0 0 14 14" fill="currentColor"><path d="M3 2 L11 7 L3 12 Z"/></svg>
           </button>
           <div class="wave-static" id="wave"></div>
-          <div class="time num" id="timeLabel">00:42</div>
+          <div class="time num" id="timeLabel">00:00</div>
         </div>
 
         <div style="display:flex; gap:8px; flex-wrap:wrap">
@@ -364,11 +365,12 @@
       <!-- Transcript -->
       <div class="demo-transcript">
         <h4>Transcript · T+00:18 to 00:42</h4>
-        <div class="t-row"><div class="who vv">VenueVox</div><div class="msg">Thanks for calling. Planning a party? Quick note — parties booked before Wednesday get our <b>game card bonus: load $100, we add $20.</b></div></div>
-        <div class="t-row"><div class="who">Guest</div><div class="msg">Oh nice. Yeah, I need Saturday afternoon. Ten kids, maybe twelve.</div></div>
-        <div class="t-row"><div class="who vv">VenueVox</div><div class="msg">Our <b>Ultimate package</b> covers 12 — two hours of bowling, pizza, soft drinks, game cards loaded. $299 flat, plus the promo bonus. I can hold Saturday at 4pm on Lane 12 for 24 hours while you check with family.</div></div>
-        <div class="t-row"><div class="who">Guest</div><div class="msg">Great, hold it. Can you send the deposit info?</div></div>
-        <div class="t-row"><div class="who vv">VenueVox</div><div class="msg">Sending the secure $150 deposit link to this number now. Auto‑follow‑up in 2 hours if it's not paid. Anything else — allergies, cake drop‑off?</div></div>
+        <div class="t-row"><div class="who">Guest</div><div class="msg">Hi, I'm planning my daughter's tenth birthday. Saturday afternoon, probably 10 to 12 kids.</div></div>
+        <div class="t-row"><div class="who vv">VenueVox</div><div class="msg">For 12 kids, <b>Mega Fun</b> fits best — two hours of gameplay, pizza, drinks, and a dedicated party host. $33.99 a kid. Quick heads-up: <b>parties booked before Wednesday get a $20 bonus when you load a $100 game card.</b> Want me to grab the 2pm slot?</div></div>
+        <div class="t-row"><div class="who">Guest</div><div class="msg">Yeah, 2pm works. Hold it.</div></div>
+        <div class="t-row"><div class="who vv">VenueVox</div><div class="msg">Done. I've placed a temporary hold and sent the deposit link. It becomes a confirmed booking once the deposit's paid. One last thing, any allergies for the kitchen, or are you dropping the cake off ahead of time?</div></div>
+        <div class="t-row"><div class="who">Guest</div><div class="msg">She has a peanut allergy, and we'll bring the cake that morning.</div></div>
+        <div class="t-row"><div class="who vv">VenueVox</div><div class="msg">Got it, peanut allergy noted and cake drop-off Saturday morning.</div></div>
       </div>
     </div>
 

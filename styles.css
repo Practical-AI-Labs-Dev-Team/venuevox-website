@@ -772,7 +772,7 @@ img { max-width: 100%; display: block; }
   display: grid;
   grid-template-columns: 1.1fr .9fr;
   gap: 32px;
-  align-items: stretch;
+  align-items: start;
 }
 
 .player {
@@ -828,6 +828,7 @@ img { max-width: 100%; display: block; }
   transition: background .2s;
 }
 .play-btn:hover { background: var(--graphite); }
+.play-btn.has-audio-error { opacity: .72; }
 
 .wave-static {
   display: flex;
@@ -871,6 +872,9 @@ img { max-width: 100%; display: block; }
   border-radius: var(--r-3xl);
   padding: 28px;
   background: var(--navy-2);
+  max-height: 340px;
+  overflow-y: auto;
+  overscroll-behavior: contain;
 }
 .demo-transcript h4 {
   font-size: 13px;

@@ -68,46 +68,93 @@
       heights.push(h);
     }
 
-    wave.innerHTML = heights.map((h, i) => {
-      const played = i / N < 0.34;
-      return `<span style="height:${h}px; background:${played ? '#0F1B2D' : 'rgba(15,27,45,.25)'}"></span>`;
+    wave.innerHTML = heights.map((h) => {
+      return `<span style="height:${h}px; background:rgba(15,27,45,.25)"></span>`;
     }).join('');
   });
 
-  // ===== Play Button Simulation =====
+  // ===== Demo Audio Player =====
   document.addEventListener('DOMContentLoaded', () => {
     const btn = document.getElementById('playBtn');
+    const audio = document.getElementById('demoAudio');
     const timeLabel = document.getElementById('timeLabel');
-    if (!btn || !timeLabel) return;
+    const durationLabel = document.getElementById('durationLabel');
+    const wave = document.getElementById('wave');
+    if (!btn || !audio || !timeLabel) return;
 
-    let playing = false;
-    let t = 42;
-    let iv;
-
+    const fallbackDuration = 69.8;
     const playIcon = '<svg width="18" height="18" viewBox="0 0 14 14" fill="currentColor"><path d="M3 2 L11 7 L3 12 Z"/></svg>';
     const pauseIcon = '<svg width="18" height="18" viewBox="0 0 14 14" fill="currentColor"><rect x="3" y="2" width="3" height="10"/><rect x="8" y="2" width="3" height="10"/></svg>';
 
-    btn.addEventListener('click', () => {
-      playing = !playing;
-      btn.innerHTML = playing ? pauseIcon : playIcon;
+    function formatTime(seconds) {
+      if (!Number.isFinite(seconds)) return '00:00';
+      const m = String(Math.floor(seconds / 60)).padStart(2, '0');
+      const s = String(Math.floor(seconds % 60)).padStart(2, '0');
+      return `${m}:${s}`;
+    }
 
-      if (playing) {
-        iv = setInterval(() => {
-          t++;
-          if (t >= 138) {
-            t = 42;
-            playing = false;
-            clearInterval(iv);
-            btn.innerHTML = playIcon;
+    function setWaveProgress(progress) {
+      const bars = wave ? Array.from(wave.querySelectorAll('span')) : [];
+      bars.forEach((bar, i) => {
+        const threshold = bars.length > 1 ? i / (bars.length - 1) : 1;
+        bar.style.background = threshold <= progress ? '#0F1B2D' : 'rgba(15,27,45,.25)';
+      });
+    }
+
+    function updateTime() {
+      const duration = Number.isFinite(audio.duration) ? audio.duration : fallbackDuration;
+      const progress = duration > 0 ? audio.currentTime / duration : 0;
+      timeLabel.textContent = formatTime(audio.currentTime);
+      if (durationLabel) {
+        durationLabel.textContent = `${formatTime(audio.currentTime)} / ${formatTime(duration)}`;
+      }
+      setWaveProgress(progress);
+    }
+
+    function setPlaying(isPlaying) {
+      btn.innerHTML = isPlaying ? pauseIcon : playIcon;
+      btn.setAttribute('aria-label', isPlaying ? 'Pause demo' : 'Play demo');
+    }
+
+    function resetErrorState() {
+      btn.classList.remove('has-audio-error');
+      btn.setAttribute('aria-label', 'Play demo');
+    }
+
+    audio.addEventListener('loadedmetadata', updateTime);
+    audio.addEventListener('timeupdate', updateTime);
+    audio.addEventListener('pause', () => setPlaying(false));
+    audio.addEventListener('play', () => setPlaying(true));
+    audio.addEventListener('ended', () => {
+      audio.currentTime = 0;
+      setPlaying(false);
+      updateTime();
+    });
+    audio.addEventListener('error', () => {
+      btn.classList.add('has-audio-error');
+      btn.setAttribute('aria-label', 'Demo audio unavailable');
+      setPlaying(false);
+    });
+
+    btn.addEventListener('click', async () => {
+      resetErrorState();
+      if (audio.paused) {
+        try {
+          if (audio.networkState === HTMLMediaElement.NETWORK_NO_SOURCE) {
+            audio.load();
           }
-          const m = String(Math.floor(t / 60)).padStart(2, '0');
-          const s = String(t % 60).padStart(2, '0');
-          timeLabel.textContent = `${m}:${s}`;
-        }, 1000);
+          await audio.play();
+        } catch (err) {
+          btn.classList.add('has-audio-error');
+          btn.setAttribute('aria-label', 'Demo audio unavailable');
+          setPlaying(false);
+        }
       } else {
-        clearInterval(iv);
+        audio.pause();
       }
     });
+
+    updateTime();
   });
 
   // ===== Intersection Observer for Fade-in Animations =====
