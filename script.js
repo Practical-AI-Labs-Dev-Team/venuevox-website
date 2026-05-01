@@ -166,7 +166,10 @@
     if (!startBtn || !panel) return;
 
     // Vapi public key — safe to expose per Vapi docs, but must be set.
-    // Set window.VAPI_PUBLIC_KEY before this script runs, or replace the placeholder.
+    // The Vercel build (build.sh) substitutes VAPI_PUBLIC_KEY_PLACEHOLDER below
+    // with the env var at deploy time. PLACEHOLDER_TOKEN is built by string
+    // concatenation so the same sed pass doesn't rewrite the comparison value.
+    const PLACEHOLDER_TOKEN = 'VAPI_PUBLIC_KEY' + '_PLACEHOLDER';
     const VAPI_PUBLIC_KEY = (window.VAPI_PUBLIC_KEY || 'VAPI_PUBLIC_KEY_PLACEHOLDER').trim();
     const ASSISTANT_ID    = startBtn.dataset.vapiAssistantId;
     const SDK_URL         = 'https://esm.sh/@vapi-ai/web@2.3.8';
@@ -252,7 +255,7 @@
 
     // ----- Environment checks (run before any mic prompt) -----
     function envBlocker() {
-      if (!VAPI_PUBLIC_KEY || VAPI_PUBLIC_KEY === 'VAPI_PUBLIC_KEY_PLACEHOLDER') {
+      if (!VAPI_PUBLIC_KEY || VAPI_PUBLIC_KEY === PLACEHOLDER_TOKEN) {
         return {
           state: 'error-sdk',
           title: 'Live demo not configured',
