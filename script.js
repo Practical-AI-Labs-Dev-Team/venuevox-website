@@ -176,6 +176,44 @@
     const PHONE_FALLBACK  =
       'or call <a href="tel:+19292362392">(929)&nbsp;236‑2392</a>.';
 
+    // Soft per-browser rate limit. Bypassable (incognito / clear storage), but
+    // stops accidental loops, dev-tool fiddlers, and casual abuse.
+    const RATE_LIMIT_KEY      = 'vv-vapi-call-history';
+    const MAX_CALLS_PER_HOUR  = 3;
+    const COOLDOWN_MS         = 60 * 1000;
+    const WINDOW_MS           = 60 * 60 * 1000;
+
+    function readCallHistory() {
+      try {
+        const raw = localStorage.getItem(RATE_LIMIT_KEY);
+        if (!raw) return [];
+        const list = JSON.parse(raw);
+        if (!Array.isArray(list)) return [];
+        const cutoff = Date.now() - WINDOW_MS;
+        return list.filter(t => typeof t === 'number' && t > cutoff);
+      } catch (_) { return []; }
+    }
+    function recordCallStart() {
+      try {
+        const list = readCallHistory();
+        list.push(Date.now());
+        localStorage.setItem(RATE_LIMIT_KEY, JSON.stringify(list));
+      } catch (_) { /* private mode / storage blocked — ignore */ }
+    }
+    function rateLimitBlocker() {
+      const list = readCallHistory();
+      if (list.length === 0) return null;
+      const sinceLast = Date.now() - list[list.length - 1];
+      if (sinceLast < COOLDOWN_MS) {
+        const wait = Math.ceil((COOLDOWN_MS - sinceLast) / 1000);
+        return { kind: 'cooldown', wait };
+      }
+      if (list.length >= MAX_CALLS_PER_HOUR) {
+        return { kind: 'cap' };
+      }
+      return null;
+    }
+
     const titleEl    = document.getElementById('liveCallTitle');
     const subEl      = document.getElementById('liveCallSub');
     const meterEl    = document.getElementById('liveCallMeter');
@@ -332,6 +370,28 @@
       if (busy) return;
       busy = true;
 
+      const rl = rateLimitBlocker();
+      if (rl) {
+        if (rl.kind === 'cooldown') {
+          setState('idle', {
+            keepVisible: true,
+            title: 'Just a moment',
+            sub: `Try again in ${rl.wait}s — ` + PHONE_FALLBACK,
+            showDismiss: true,
+          });
+        } else {
+          setState('idle', {
+            keepVisible: true,
+            title: 'Demo limit reached',
+            sub: 'You\'ve tried the live demo a few times. For a deeper look —',
+            showBooking: true,
+            showDismiss: true,
+          });
+        }
+        busy = false;
+        return;
+      }
+
       const blocker = envBlocker();
       if (blocker) {
         setState(blocker.state, {
@@ -374,6 +434,7 @@
         bindPageCleanup();
 
         vapi.on('call-start', () => {
+          recordCallStart();
           clearTimeout(connectTimeoutId);
           setState('active', {
             title: 'Live with VenueVox',
