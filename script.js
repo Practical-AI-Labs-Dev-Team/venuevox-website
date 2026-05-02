@@ -183,6 +183,7 @@
     const endBtn     = document.getElementById('endCallBtn');
     const retryBtn   = document.getElementById('liveCallRetryBtn');
     const dismissBtn = document.getElementById('liveCallDismissBtn');
+    const bookBtn    = document.getElementById('liveCallBookBtn');
     const labelEl    = startBtn.querySelector('.btn-label');
 
     // ----- State -----
@@ -197,7 +198,6 @@
     let cleanupBound = false;
     let connectTimeoutId = 0;
     let endTimeoutId = 0;
-    let endedFadeId = 0;
 
     function setState(next, opts = {}) {
       state = next;
@@ -217,7 +217,8 @@
       endBtn.hidden     = !(isLive || next === 'ending');
       endBtn.disabled   = next === 'ending';
       retryBtn.hidden   = !(isErrorState && opts.allowRetry !== false);
-      dismissBtn.hidden = !isErrorState;
+      dismissBtn.hidden = !(isErrorState || opts.showDismiss);
+      if (bookBtn) bookBtn.hidden = !opts.showBooking;
 
       if (isLive) {
         startBtn.disabled = true;
@@ -308,7 +309,6 @@
     function disposeVapi() {
       clearTimeout(connectTimeoutId);
       clearTimeout(endTimeoutId);
-      clearTimeout(endedFadeId);
       if (!vapi) return;
       try { vapi.removeAllListeners && vapi.removeAllListeners(); } catch (_) {}
       try { vapi.stop && vapi.stop(); } catch (_) {}
@@ -395,12 +395,10 @@
           setState('idle', {
             keepVisible: true,
             title: 'Call ended',
-            sub: 'Thanks for trying the live demo. ' + PHONE_FALLBACK,
+            sub: 'If you\'d like to explore VenueVox for your venue —',
+            showBooking: true,
+            showDismiss: true,
           });
-          clearTimeout(endedFadeId);
-          endedFadeId = setTimeout(() => {
-            if (state === 'idle') setState('idle');
-          }, 4500);
         });
         vapi.on('error', (err) => {
           const msg = String((err && (err.errorMsg || err.message || err.error)) || '');
@@ -458,7 +456,9 @@
           setState('idle', {
             keepVisible: true,
             title: 'Call ended',
-            sub: 'Thanks for trying the live demo. ' + PHONE_FALLBACK,
+            sub: 'If you\'d like to explore VenueVox for your venue —',
+            showBooking: true,
+            showDismiss: true,
           });
         }
       }, 4000);
