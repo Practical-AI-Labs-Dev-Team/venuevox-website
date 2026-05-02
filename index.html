@@ -357,8 +357,54 @@
           <span class="tag" style="background:rgba(16,185,129,.12); color:var(--emerald)">Deposit link sent</span>
         </div>
 
-        <div style="display:flex; gap:12px; margin-top:4px">
+        <div class="demo-actions">
           <a class="btn btn-dark" href="tel:+19292362392" id="callDemoBtn">Call demo: (929) 236‑2392</a>
+          <button
+            type="button"
+            class="btn btn-brass-outline"
+            id="liveCallBtn"
+            data-vapi-assistant-id="8d3b3414-c6c0-4d0a-af5f-5fb003646bda"
+          >
+            <svg class="mic-icon" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <rect x="9" y="2" width="6" height="12" rx="3"/>
+              <path d="M5 11a7 7 0 0 0 14 0"/>
+              <line x1="12" y1="18" x2="12" y2="22"/>
+              <line x1="8" y1="22" x2="16" y2="22"/>
+            </svg>
+            <span class="btn-label">Talk to VenueVox now</span>
+          </button>
+        </div>
+
+        <div class="live-call" id="liveCallPanel" hidden aria-live="polite">
+          <div class="live-call-row">
+            <span class="live-call-indicator" data-state="idle" aria-hidden="true">
+              <span class="live-dot"></span>
+            </span>
+            <div class="live-call-body">
+              <div class="live-call-title" id="liveCallTitle">Connecting…</div>
+              <div class="live-call-sub" id="liveCallSub">Checking microphone access</div>
+            </div>
+            <div class="live-call-meter" id="liveCallMeter" aria-hidden="true">
+              <span></span><span></span><span></span><span></span><span></span>
+            </div>
+          </div>
+          <div class="live-call-actions">
+            <button type="button" class="btn-link" id="liveCallDismissBtn" hidden>Dismiss</button>
+            <button type="button" class="btn-link" id="liveCallRetryBtn" hidden>Try again</button>
+            <button
+              type="button"
+              class="btn btn-primary btn-sm"
+              id="liveCallBookBtn"
+              data-cal-link="aqsaf/venuevox"
+              data-cal-namespace="venuevox"
+              data-cal-config='{"layout":"month_view","useSlotsViewOnSmallScreen":"true"}'
+              hidden
+            >Book time here <span class="arrow">→</span></button>
+            <button type="button" class="btn btn-end-call" id="endCallBtn" hidden>
+              <span class="end-square" aria-hidden="true"></span>
+              End call
+            </button>
+          </div>
         </div>
       </div>
 
