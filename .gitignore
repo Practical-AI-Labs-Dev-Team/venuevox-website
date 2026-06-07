@@ -12,3 +12,7 @@ Thumbs.db
 # Build
 dist/
 .cache/
+.gstack/
+
+# Tooling state
+.deepwork/

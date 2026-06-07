@@ -1,4 +1,18 @@
 {
   "buildCommand": "bash build.sh",
-  "outputDirectory": "."
+  "outputDirectory": ".",
+  "headers": [
+    {
+      "source": "/concierge-demo",
+      "headers": [{ "key": "X-Robots-Tag", "value": "noindex, nofollow" }]
+    },
+    {
+      "source": "/concierge-demo/:path*",
+      "headers": [{ "key": "X-Robots-Tag", "value": "noindex, nofollow" }]
+    },
+    {
+      "source": "/api/concierge",
+      "headers": [{ "key": "X-Robots-Tag", "value": "noindex, nofollow" }]
+    }
+  ]
 }
