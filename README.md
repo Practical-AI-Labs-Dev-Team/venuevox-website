@@ -45,7 +45,7 @@ Without `ANTHROPIC_API_KEY` the page still loads and the chat degrades to a grac
 Local live testing needs `vercel dev` (a plain static server can't run the function).
 
 **Access gate.** If `CONCIERGE_ACCESS_CODE` is set, share the link with the code pre-filled —
-`venuevox.us/concierge-demo?access=ashish` — so the recipient never sees a prompt. The page
+`venuevox.us/concierge-demo/?access=ashish` — so the recipient never sees a prompt. The page
 stores the code, strips it from the URL bar, and sends it as the `x-demo-access` header; the
 function rejects calls without it (401). Leave the env var unset to disable the gate.
 
