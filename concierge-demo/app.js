@@ -76,6 +76,7 @@
   /* ----------------------------- helpers ----------------------------- */
   function clone(o) { return JSON.parse(JSON.stringify(o)); }
   function $(id) { return document.getElementById(id); }
+  function track(event, props) { try { if (window.posthog) window.posthog.capture(event, props || {}); } catch (e) {} }
 
   function esc(s) {
     return String(s == null ? "" : s).replace(/[&<>"']/g, function (c) {
@@ -202,7 +203,7 @@
 
     Array.prototype.forEach.call($pkg.querySelectorAll(".pkg-cta"), function (btn) {
       btn.addEventListener("click", function () {
-        sendTurn("I'd like to book the " + btn.getAttribute("data-pkg") + " package — what's next?");
+        sendTurn("I'd like to book the " + btn.getAttribute("data-pkg") + " package — what's next?", "package");
       });
     });
   }
@@ -255,7 +256,7 @@
     Array.prototype.forEach.call($avail.querySelectorAll(".slot"), function (btn) {
       if (btn.getAttribute("data-status") === "booked") return;
       btn.addEventListener("click", function () {
-        sendTurn("Can we do " + btn.getAttribute("data-date") + " at " + btn.getAttribute("data-time") + "?");
+        sendTurn("Can we do " + btn.getAttribute("data-date") + " at " + btn.getAttribute("data-time") + "?", "slot");
       });
     });
   }
@@ -268,7 +269,7 @@
     });
     $starters.innerHTML = html;
     Array.prototype.forEach.call($starters.querySelectorAll(".starter"), function (btn) {
-      btn.addEventListener("click", function () { sendTurn(btn.getAttribute("data-text")); });
+      btn.addEventListener("click", function () { sendTurn(btn.getAttribute("data-text"), "starter"); });
     });
   }
 
@@ -308,10 +309,11 @@
     return data.reply;
   }
 
-  function sendTurn(text) {
+  function sendTurn(text, source) {
     if (loading) return;
     var t = String(text || "").trim();
     if (!t) return;
+    track("concierge_message_sent", { source: source || "input" });
     messages.push({ role: "guest", text: t, raw: t, ts: fmtTime() });
     renderMessages();
     scrollToChat();
@@ -326,11 +328,18 @@
       var reply = await callConcierge(buildHistory());
       var parsed = splitReply(reply);
       messages.push({ role: "agent", text: parsed.text || "…", raw: reply, ts: fmtTime() });
+      var prevPkg = capture.package, prevSlot = !!(capture.date && capture.time), prevDep = capture.depositStatus;
       capture = mergeCapture(capture, parsed.capture);
+      track("concierge_reply_received", {});
+      if (!prevPkg && capture.package) track("concierge_package_selected", { package: capture.package });
+      if (!prevSlot && capture.date && capture.time) track("concierge_slot_selected", { date: capture.date, time: capture.time });
+      if (prevDep !== "Pending (demo)" && capture.depositStatus === "Pending (demo)") track("concierge_deposit_reached", {});
     } catch (err) {
       if (err && err.code === "access") {
+        track("concierge_reply_failed", { reason: "access" });
         messages.push({ role: "system", text: "🔒 This demo is access-protected. Open it with the access link you were sent (it includes ?access=…).", ts: fmtTime() });
       } else {
+        track("concierge_reply_failed", { reason: "error" });
         messages.push({ role: "agent", text: FALLBACK_TEXT, raw: null, ts: fmtTime() });
       }
     } finally {
@@ -376,6 +385,7 @@
       var next = document.documentElement.getAttribute("data-theme") === "dark" ? "light" : "dark";
       document.documentElement.setAttribute("data-theme", next);
       try { localStorage.setItem("vv-concierge-theme", next); } catch (e) {}
+      track("concierge_theme_toggled", { theme: next });
     });
   }
 
@@ -403,6 +413,7 @@
 
     initAccess();
     initTheme();
+    if (window.posthog && window.posthog.register) window.posthog.register({ surface: "concierge-demo", venue: "Apex Social" });
     renderStarters();
     renderPackages();
     resetDemo();
@@ -412,12 +423,12 @@
       var v = $input.value;
       $input.value = "";
       $send.disabled = true;
-      sendTurn(v);
+      sendTurn(v, "input");
     });
     $input.addEventListener("input", function () { $send.disabled = loading || !$input.value.trim(); });
     $send.disabled = true;
 
-    $reset.addEventListener("click", resetDemo);
+    $reset.addEventListener("click", function () { track("concierge_demo_reset", {}); resetDemo(); });
 
     $capToggle.addEventListener("click", function () {
       var collapsed = $capture.classList.toggle("collapsed");
