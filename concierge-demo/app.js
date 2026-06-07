@@ -333,7 +333,20 @@
       track("concierge_reply_received", {});
       if (!prevPkg && capture.package) track("concierge_package_selected", { package: capture.package });
       if (!prevSlot && capture.date && capture.time) track("concierge_slot_selected", { date: capture.date, time: capture.time });
-      if (prevDep !== "Pending (demo)" && capture.depositStatus === "Pending (demo)") track("concierge_deposit_reached", {});
+      if (prevDep !== "Pending (demo)" && capture.depositStatus === "Pending (demo)") {
+        track("concierge_deposit_reached", {});
+        track("concierge_booking_captured", {
+          occasion: capture.occasion || null,
+          headcount: capture.headcount || null,
+          package: capture.package || null,
+          date: capture.date || null,
+          time: capture.time || null,
+          add_ons: capture.addOns || [],
+          has_allergies: !!(capture.allergies && String(capture.allergies).trim()),
+          cake_dropoff: capture.cakeDropoff || null
+        });
+        messages.push({ role: "system", text: "This is a live demo — I haven't actually sent a text or charged a deposit. Thanks for trying Apex Social!", ts: fmtTime() });
+      }
     } catch (err) {
       if (err && err.code === "access") {
         track("concierge_reply_failed", { reason: "access" });
